@@ -23,6 +23,8 @@ func _ready() -> void:
 
   EventBus.ok_report_sent.connect(_on_ok_report_sent)
   EventBus.error_report_sent.connect(_on_error_report_sent)
+  EventBus.report_added.connect(_on_report_added)
+  EventBus.report_skipped.connect(_on_report_skipped)
 
   _timer.timeout.connect(_on_timeout)
 
@@ -60,3 +62,11 @@ func _on_error_report_sent(_data: ReportData, errors_counter: int) -> void:
 
   _sprite.texture = texture
   _timer.start()
+
+
+func _on_report_added(_data: ReportData) -> void:
+  hide_signal()
+
+
+func _on_report_skipped(_data: ReportData) -> void:
+  hide_signal()

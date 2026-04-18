@@ -9,7 +9,8 @@ extends Node2D
 @export var analyze_duration: float = 1
 @export var event_scene: PackedScene
 @export var report_added_text: String = "Report added"
-@export var report_already_added: String = "Report already added"
+@export var report_already_added_text: String = "Report already added"
+@export var report_skipped_text: String = "Report skipped"
 
 @onready var _sprite: Sprite2D = %Sprite2D
 @onready var _container: Node2D = %Container
@@ -17,16 +18,19 @@ extends Node2D
 @onready var _label: Label = %Label
 @onready var _notification_timer: Timer = %Timer
 @onready var _canvas: CanvasLayer = %CanvasLayer
-@onready var _ui_container: VBoxContainer = %VBoxContainer
+@onready var _focusing_container: VBoxContainer = %FocusingHelper
+@onready var _analyzing_container: VBoxContainer = %AnalyzingHelper
 
 signal closed
 
 var _reported_events: Array[Event]
 var _events: Array[Event]
-var _interact_event: Event
+var _focus_event: Event
 var _looking_disabled: bool
 var _tw: Tween
 var _old_position: Vector2 = Vector2.ZERO
+
+var _is_focused: bool
 
 
 func _ready() -> void:
@@ -39,11 +43,13 @@ func _ready() -> void:
 	assert(_label != null, "label is not set")
 	assert(_notification_timer != null, "notification timer is not set")
 	assert(_canvas != null, "canvas layer is not set")
-	assert(_ui_container != null, "ui container is not set")
+	assert(_focusing_container != null, "focusing container is not set")
+	assert(_analyzing_container != null, "analyzing container is not set")
 
 	_notification_timer.timeout.connect(_on_timeout)
 
-	_ui_container.visible = false
+	_focusing_container.visible = false
+	_analyzing_container.visible = false
 	_progress.visible = false
 	_canvas.visible = false
 	_label.visible = false
@@ -72,28 +78,40 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-	if event.is_action_pressed(InputActions.Esc, false):
-		_close()
+	if not _is_focused:
+		if event.is_action_pressed(InputActions.Esc, false):
+			_try_to_close()
 
-	if event.is_action_pressed(InputActions.Interact):
-		_try_to_interact()
+		if event.is_action_pressed(InputActions.Interact):
+			_try_to_focus()
 
-	if event.is_action_released(InputActions.Interact):
-		_try_to_stop_interaction()
+		if event.is_action_released(InputActions.Interact):
+			_try_to_stop_focus()
 
-	if event is InputEventMouseMotion:
-		_try_to_look(event.relative)
+		if event is InputEventMouseMotion:
+			_try_to_look(event.relative)
+	else:
+		if event.is_action_pressed(InputActions.Esc, false):
+			_try_to_skip()
 
+		if event.is_action_released(InputActions.Esc):
+			_try_to_stop_skip()
 
-func clear_events() -> void:
-	_reported_events.clear()
-	_events.clear()
-	_old_position = Vector2.ZERO
+		if event.is_action_pressed(InputActions.Interact, false):
+			_try_to_send_signal()
+
+		if event.is_action_released(InputActions.Interact):
+			_try_to_stop_send_signal()
+
+		if event is InputEventMouseMotion:
+			_try_to_look(event.relative)
 
 
 func enter() -> void:
 	_canvas.visible = true
-	_ui_container.visible = true
+	_focusing_container.visible = true
+	_analyzing_container.visible = false
+	_looking_disabled = false
 
 	var pos := _old_position
 	if pos == Vector2.ZERO:
@@ -105,13 +123,17 @@ func enter() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
-func _close() -> void:
+# close start
+
+func _try_to_close() -> void:
 	_canvas.visible = false
-	_ui_container.visible = false
+	_focusing_container.visible = false
 	_old_position = camera.global_position
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	closed.emit()
+
+# close end
 
 
 func _fit_in_borders(relative: Vector2) -> Vector2:
@@ -157,6 +179,8 @@ func register_new_event(event: EventData) -> void:
 	instance.exited.connect(_on_event_exited)
 
 
+# look start
+
 func _try_to_look(relative: Vector2) -> void:
 	if _looking_disabled:
 		return
@@ -164,71 +188,41 @@ func _try_to_look(relative: Vector2) -> void:
 	var new_pos := _fit_in_borders(relative * speed)
 	camera.global_position = new_pos
 
+# look end
 
-func _try_to_interact() -> void:
+# focus start
+
+func _try_to_focus() -> void:
 	if _events.size() == 0:
 		return
 
-	var closest: Event
-	var closest_dist: float = INF
-	for event in _events:
-		if _reported_events.has(event):
-			continue
-
-		var dist: float = abs(event.global_position.distance_to(camera.global_position))
-		if dist < closest_dist:
-			closest_dist = dist
-			closest = event
-
+	var closest := _find_closest_event()
 	if not closest:
 		return
 
-	_interact_event = closest
+	_focus_event = closest
 	_looking_disabled = true
 
-	var is_focused: bool = closest.global_position.distance_squared_to(camera.global_position) < 0.01
-	if not is_focused:
-		_focus_on_event()
-	else:
-		_analyze_event()
-
-
-func _focus_on_event() -> void:
-	var event := _interact_event
-	if not event:
-		return
-
 	_tw = get_tree().create_tween()
-	_tw.tween_property(camera, "global_position", event.global_position, focus_duration)
+	_tw.tween_property(camera, "global_position", _focus_event.global_position, focus_duration)
 	_tw.tween_callback(_on_focused)
 
 
-func _analyze_event() -> void:
-	if not _interact_event:
+func _try_to_stop_focus() -> void:
+	if not _focus_event:
 		return
 
-	if _reported_events.has(_interact_event):
-		_show_notification(report_already_added)
-		return
-
-	_tw = get_tree().create_tween()
-	_progress.visible = true
-	_tw.tween_property(_progress, "value", 100, analyze_duration)
-	_tw.tween_callback(_on_analyzed)
-
-
-func _try_to_stop_interaction() -> void:
-	if not _interact_event:
-		return
-
-	var is_focused: bool = _interact_event.global_position == camera.global_position
-	if not is_focused:
-		_stop_focus()
-	else:
-		_stop_analyze()
-
+	_stop_focus()
 	_looking_disabled = false
-	_interact_event = null
+	_focus_event = null
+
+
+func _on_focused() -> void:
+	_stop_focus()
+	_is_focused = true
+
+	_focusing_container.visible = false
+	_analyzing_container.visible = true
 
 
 func _stop_focus() -> void:
@@ -237,13 +231,101 @@ func _stop_focus() -> void:
 		_tw = null
 
 
-func _stop_analyze() -> void:
+# focus end
+
+# skip start
+
+func _try_to_skip() -> void:
+	if not _focus_event:
+		return
+
+	_tw = get_tree().create_tween()
+	_progress.visible = true
+	_tw.tween_property(_progress, "value", 100, analyze_duration)
+	_tw.tween_callback(_on_skipped)
+
+
+func _try_to_stop_skip() -> void:
+	if not _focus_event:
+		return
+
+	_stop_skip()
+
+
+func _on_skipped() -> void:
+	_stop_skip()
+	_is_focused = false
+	_looking_disabled = false
+
+	var report_data := ReportData.new()
+	report_data.texture = _focus_event.event.texture
+	report_data.event_data = _focus_event.event
+	report_data.is_signal_sent = false
+
+	EventBus.emit_report_skipped(report_data)
+
+	_focus_event.mark_analyzed()
+	_reported_events.append(_focus_event)
+	_show_notification(report_skipped_text)
+
+
+func _stop_skip() -> void:
 	if _tw:
 		_tw.kill()
 		_tw = null
 
 	_progress.value = 0
 	_progress.visible = false
+
+
+# skip end
+
+# send signal start
+
+func _try_to_send_signal() -> void:
+	if not _focus_event:
+		return
+
+	_tw = get_tree().create_tween()
+	_progress.visible = true
+	_tw.tween_property(_progress, "value", 100, analyze_duration)
+	_tw.tween_callback(_on_send_signal)
+
+
+func _on_send_signal() -> void:
+	_stop_send_signal()
+	_is_focused = false
+	_looking_disabled = false
+
+	var report_data := ReportData.new()
+	report_data.texture = _focus_event.event.texture
+	report_data.event_data = _focus_event.event
+	report_data.is_signal_sent = true
+
+	EventBus.emit_report_added(report_data)
+
+	_focus_event.mark_analyzed()
+	_reported_events.append(_focus_event)
+	_show_notification(report_added_text)
+
+
+func _try_to_stop_send_signal() -> void:
+	if not _focus_event:
+		return
+
+	_stop_send_signal()
+
+
+func _stop_send_signal() -> void:
+	if _tw:
+		_tw.kill()
+		_tw = null
+
+	_progress.value = 0
+	_progress.visible = false
+
+
+# send signal end
 
 
 func _show_notification(message: String) -> void:
@@ -255,33 +337,27 @@ func _show_notification(message: String) -> void:
 	_notification_timer.start()
 
 
+func _find_closest_event() -> Event:
+	var closest: Event
+	var closest_dist: float = INF
+	for event in _events:
+		if _reported_events.has(event):
+			continue
+
+		var dist: float = abs(event.global_position.distance_to(camera.global_position))
+		if dist < closest_dist:
+			closest_dist = dist
+			closest = event
+
+	return closest
+
+
 func _on_event_entered(n: Event) -> void:
 	_events.append(n)
 
 
 func _on_event_exited(n: Event) -> void:
 	_events.erase(n)
-
-
-func _on_focused() -> void:
-	_stop_focus()
-
-	if _interact_event:
-		_analyze_event()
-
-
-func _on_analyzed() -> void:
-	_stop_analyze()
-
-	var report_data := ReportData.new()
-	report_data.texture = _interact_event.event.texture
-	report_data.event_data = _interact_event.event
-
-	EventBus.emit_report_added(report_data)
-
-	_interact_event.mark_analyzed()
-	_reported_events.append(_interact_event)
-	_show_notification(report_added_text)
 
 
 func _on_timeout() -> void:

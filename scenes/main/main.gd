@@ -56,11 +56,15 @@ func _on_new_event(event_data: EventData) -> void:
 
 
 func _on_report_sent(report_data: ReportData) -> void:
+	if not report_data.is_signal_sent:
+		return
+
 	if report_data.event_data.is_anomaly:
 		_errors_counter += 1
 		EventBus.emit_error_report_sent(report_data, _errors_counter)
 	else:
 		_progress += 1
+
 		if _progress >= progress_threshold:
 			EventBus.emit_research_completed()
 		else:

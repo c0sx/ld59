@@ -74,23 +74,44 @@ theme_type_variation = &"Label_m"
 text = "Report added"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=884913129]
+[node name="FocusingHelper" type="VBoxContainer" parent="CanvasLayer" unique_id=884913129]
 unique_name_in_owner = true
-visible = false
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -54.0
-offset_right = 242.0
+offset_top = -42.0
+offset_right = 213.0
 grow_vertical = 0
 
-[node name="Esc" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=90365836]
+[node name="Esc" type="Label" parent="CanvasLayer/FocusingHelper" unique_id=90365836]
 layout_mode = 2
 theme = ExtResource("5_wsfho")
 theme_type_variation = &"Label_m"
 text = "Press 'Esc' to exit"
 
-[node name="Space" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=803411786]
+[node name="Space" type="Label" parent="CanvasLayer/FocusingHelper" unique_id=803411786]
+layout_mode = 2
+theme = ExtResource("5_wsfho")
+theme_type_variation = &"Label_m"
+text = "Hold 'Space' to focus"
+
+[node name="AnalyzingHelper" type="VBoxContainer" parent="CanvasLayer" unique_id=1685045456]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -42.0
+offset_right = 213.0
+grow_vertical = 0
+
+[node name="Esc" type="Label" parent="CanvasLayer/AnalyzingHelper" unique_id=1557119632]
+layout_mode = 2
+theme = ExtResource("5_wsfho")
+theme_type_variation = &"Label_m"
+text = "Hold 'Esc' to skip"
+
+[node name="Space" type="Label" parent="CanvasLayer/AnalyzingHelper" unique_id=1195531915]
 layout_mode = 2
 theme = ExtResource("5_wsfho")
 theme_type_variation = &"Label_m"

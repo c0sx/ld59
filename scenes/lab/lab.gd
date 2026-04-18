@@ -45,8 +45,8 @@ func _ready() -> void:
 	assert(_monitor != null, "monitor is not set")
 	assert(_progress != null, "progress is not set")
 
-	EventBus.report_added.connect(_on_report_added)
 	EventBus.report_sent.connect(_on_report_sent)
+	EventBus.report_skipped.connect(_on_report_skipped)
 
 	_player.move_finished.connect(_on_move_finished)
 	_telescope.clicked.connect(_on_telescope_clicked)
@@ -190,10 +190,10 @@ func _on_event_timer_timeout() -> void:
 	new_event.emit(event_data)
 
 
-func _on_report_added(_data: ReportData) -> void:
-	_monitor.hide_signal()
-
-
 func _on_report_sent(_data: ReportData) -> void:
 	get_tree().paused = false
+	_event_timer.start()
+
+
+func _on_report_skipped(_data: ReportData) -> void:
 	_event_timer.start()

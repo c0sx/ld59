@@ -8,6 +8,12 @@ func emit_report_added(report_data: ReportData) -> void:
   report_added.emit(report_data)
 
 
+signal report_skipped(report_data: ReportData)
+
+func emit_report_skipped(report_data: ReportData) -> void:
+  report_skipped.emit(report_data)
+
+
 signal report_opened(report_data: ReportData)
 
 func emit_report_opened(report_data: ReportData) -> void:
