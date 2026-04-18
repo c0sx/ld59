@@ -1,8 +1,14 @@
 [gd_scene format=3 uid="uid://b3qe8km4p55cc"]
 
+[ext_resource type="Shader" uid="uid://b7yvunqe35cek" path="res://shader/grayscale.gdshader" id="1_5te00"]
 [ext_resource type="Script" uid="uid://64pd3dghh2yy" path="res://scenes/events/event.gd" id="1_kxbol"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5te00"]
+shader = ExtResource("1_5te00")
+shader_parameter/amount = 1.0
+
 [node name="Event" type="Sprite2D" unique_id=1605814883]
+material = SubResource("ShaderMaterial_5te00")
 script = ExtResource("1_kxbol")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=701614679]

@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://coajks8f24vtd"]
 
 [ext_resource type="Script" uid="uid://bhwlgopwivabx" path="res://scenes/telescope/telescope.gd" id="1_vb11p"]
-[ext_resource type="PackedScene" uid="uid://da1cqc68qafgu" path="res://scenes/nova/nova.tscn" id="2_hf2he"]
 [ext_resource type="Texture2D" uid="uid://b432ay422fc7p" path="res://scenes/telescope/bg.png" id="2_mipnb"]
 [ext_resource type="Texture2D" uid="uid://vni35xpg8wg8" path="res://scenes/telescope/lens.png" id="4_wsfho"]
 [ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="5_wsfho"]
@@ -9,7 +8,7 @@
 [node name="Telescope" type="Node2D" unique_id=1875781477 node_paths=PackedStringArray("camera")]
 script = ExtResource("1_vb11p")
 camera = NodePath("Camera2D")
-nova_scene = ExtResource("2_hf2he")
+auto_moving_speed = 25
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=566847174]
 visible = false
@@ -71,6 +70,7 @@ offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("5_wsfho")
+theme_type_variation = &"Label_m"
 text = "Report added"
 horizontal_alignment = 1
 
@@ -87,12 +87,14 @@ grow_vertical = 0
 [node name="Esc" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=90365836]
 layout_mode = 2
 theme = ExtResource("5_wsfho")
+theme_type_variation = &"Label_m"
 text = "Press 'Esc' to exit"
 
 [node name="Space" type="Label" parent="CanvasLayer/VBoxContainer" unique_id=803411786]
 layout_mode = 2
 theme = ExtResource("5_wsfho")
-text = "Hold 'Space' to analyze"
+theme_type_variation = &"Label_m"
+text = "Hold 'Space' to send signal"
 
 [node name="Timer" type="Timer" parent="." unique_id=417931842]
 unique_name_in_owner = true

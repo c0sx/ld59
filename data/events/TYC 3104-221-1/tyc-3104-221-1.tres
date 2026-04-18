@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://lvxgr3uo4gti"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_wui76"]
+[ext_resource type="Texture2D" uid="uid://mj3x3b0m4or7" path="res://data/events/TYC 3104-221-1/dark-nova.png" id="2_xcg5n"]
+
+[resource]
+script = ExtResource("1_wui76")
+texture = ExtResource("2_xcg5n")
+name = "TYC 3104-221-1"
+description = "K-dwarf, quiet"
+is_anomaly = true
+metadata/_custom_type_script = "uid://b8lnirribpset"

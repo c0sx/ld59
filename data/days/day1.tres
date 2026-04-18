@@ -1,10 +1,19 @@
 [gd_resource type="Resource" script_class="DayConfig" format=3 uid="uid://lcimlongaj2q"]
 
 [ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_xertv"]
-[ext_resource type="Resource" uid="uid://17o1718rs7r0" path="res://data/events/nova/nova.tres" id="2_jx6is"]
 [ext_resource type="Script" uid="uid://crcxdmvxwwbm2" path="res://data/day-config.gd" id="2_q7ry3"]
+[ext_resource type="Resource" uid="uid://mwwl6bgmk18m" path="res://data/events/LHS 475/lhs-475.tres" id="3_3hfvd"]
+[ext_resource type="Resource" uid="uid://duogyou402q0q" path="res://data/events/HD 18492/hd-18492.tres" id="4_5cywe"]
+[ext_resource type="Resource" uid="uid://cylntaenjoube" path="res://data/events/HIP 77257/hip-77257.tres" id="5_w8ves"]
+[ext_resource type="Resource" uid="uid://dkr4ul22ergha" path="res://data/events/Wolf 1061/wolf-1061.tres" id="6_jlsex"]
+[ext_resource type="Resource" uid="uid://bjrklkn63ndnm" path="res://data/events/BD+17 3248/bd17-3248.tres" id="7_mqiha"]
+[ext_resource type="Resource" uid="uid://csggg25ldj48k" path="res://data/events/Gliese 892/gliese-892.tres" id="8_7y1m0"]
+[ext_resource type="Resource" uid="uid://lvxgr3uo4gti" path="res://data/events/TYC 3104-221-1/tyc-3104-221-1.tres" id="9_ssvip"]
+[ext_resource type="Resource" uid="uid://cgixybqu0vgsc" path="res://data/events/SDSS J0104+1535/sdss-j01041535.tres" id="10_2jbyn"]
+[ext_resource type="Resource" uid="uid://iherpdf64hqm" path="res://data/events/Gaia DR3 438726/gaia-dr3-438726.tres" id="11_fkpcd"]
+[ext_resource type="Resource" uid="uid://dkugk5xg4wg5v" path="res://data/events/2MASS J1835+3259/2mass-j18353259.tres" id="12_mabp7"]
 
 [resource]
 script = ExtResource("2_q7ry3")
-events = Array[ExtResource("1_xertv")]([ExtResource("2_jx6is"), ExtResource("2_jx6is"), ExtResource("2_jx6is")])
+events = Array[ExtResource("1_xertv")]([ExtResource("6_jlsex"), ExtResource("9_ssvip"), ExtResource("11_fkpcd"), ExtResource("12_mabp7"), ExtResource("7_mqiha"), ExtResource("8_7y1m0"), ExtResource("4_5cywe"), ExtResource("5_w8ves"), ExtResource("3_3hfvd"), ExtResource("10_2jbyn")])
 metadata/_custom_type_script = "uid://crcxdmvxwwbm2"

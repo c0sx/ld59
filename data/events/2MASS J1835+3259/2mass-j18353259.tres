@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://dkugk5xg4wg5v"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_tugld"]
+[ext_resource type="Texture2D" uid="uid://476tnowi7p0j" path="res://data/events/2MASS J1835+3259/nova.png" id="2_4ycmn"]
+
+[resource]
+script = ExtResource("1_tugld")
+texture = ExtResource("2_4ycmn")
+name = "2MASS J1835+3259"
+description = "ultracool dwarf"
+metadata/_custom_type_script = "uid://b8lnirribpset"

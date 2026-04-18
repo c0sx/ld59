@@ -7,9 +7,18 @@ extends CharacterBody2D
 
 signal move_finished
 
+var _reports: Array[ReportData]
+
 
 func _ready() -> void:
 	_agent.navigation_finished.connect(_on_navigation_finished)
+
+	EventBus.report_added.connect(_on_report_added)
+	EventBus.report_sent.connect(_on_report_sent)
+
+
+func get_reports() -> Array[ReportData]:
+	return _reports
 
 
 func move_to(pos: Vector2) -> void:
@@ -25,11 +34,16 @@ func _physics_process(_delta: float) -> void:
 
 		velocity = direction * speed
 
-	if not is_inside_tree():
-			return
-
 	move_and_slide()
 
 
 func _on_navigation_finished() -> void:
 	move_finished.emit()
+
+
+func _on_report_added(data: ReportData) -> void:
+	_reports.append(data)
+
+
+func _on_report_sent(data: ReportData) -> void:
+	_reports.erase(data)

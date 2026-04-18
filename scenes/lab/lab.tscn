@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://f47vi54s5lyh" path="res://scenes/lab/lab.gd" id="1_bi3ph"]
 [ext_resource type="Texture2D" uid="uid://ce63edsrfk1c7" path="res://scenes/lab/floor.png" id="1_gq2x7"]
 [ext_resource type="PackedScene" uid="uid://dxknf6olx7u5x" path="res://scenes/player/player.tscn" id="2_ngnlj"]
-[ext_resource type="Resource" uid="uid://lcimlongaj2q" path="res://data/days/day1.tres" id="2_umjok"]
 [ext_resource type="Texture2D" uid="uid://bstovbs6jnxtn" path="res://scenes/lab/desk.png" id="3_o632f"]
 [ext_resource type="Texture2D" uid="uid://dyjnr2vfgkc4a" path="res://scenes/lab/wall-bottom.png" id="4_l0ccj"]
 [ext_resource type="Texture2D" uid="uid://b8v1iv4jl1eeh" path="res://scenes/lab/wall.png" id="5_ucfl2"]
@@ -15,6 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://oy74b865qkdk" path="res://scenes/props/monitor/monitor.tscn" id="10_bfyp6"]
 [ext_resource type="PackedScene" uid="uid://ceow8wk1kxbsx" path="res://scenes/props/bed/bed.tscn" id="11_0mjck"]
 [ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="12_n4wn5"]
+[ext_resource type="PackedScene" uid="uid://dcrx2hcod6hap" path="res://scenes/report/report.tscn" id="15_umjok"]
+[ext_resource type="PackedScene" uid="uid://chvdhiuohvcy7" path="res://scenes/lab/ui/rest-layout/rest-layout.tscn" id="16_8oevq"]
+[ext_resource type="PackedScene" uid="uid://bm4i78xcw7in6" path="res://ui/hud/progress/progress.tscn" id="16_tgbm7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ngnlj"]
 texture = ExtResource("1_gq2x7")
@@ -46,7 +48,6 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(160, 152, 336, 152, 336
 
 [node name="Lab" type="Node2D" unique_id=1247354534]
 script = ExtResource("1_bi3ph")
-config = ExtResource("2_umjok")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1864471214]
 position = Vector2(320, 180)
@@ -120,23 +121,36 @@ position = Vector2(208, 240)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2018082166]
 
-[node name="Label" type="Label" parent="CanvasLayer" unique_id=436368726]
+[node name="Report" parent="CanvasLayer" unique_id=118048719 instance=ExtResource("15_umjok")]
 unique_name_in_owner = true
+process_mode = 3
 visible = false
-anchors_preset = -1
-anchor_left = 0.5
+
+[node name="RestLayout" parent="CanvasLayer" unique_id=757482051 instance=ExtResource("16_8oevq")]
+visible = false
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1460067256]
+unique_name_in_owner = true
+anchors_preset = 12
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -52.5
 offset_top = -23.0
-offset_right = 52.5
-offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("12_n4wn5")
-text = "Report added"
+theme_type_variation = &"Label_m"
 horizontal_alignment = 1
+
+[node name="Progress" parent="CanvasLayer" unique_id=679308264 instance=ExtResource("16_tgbm7")]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+offset_left = -1.0
+offset_bottom = 19.0
+grow_horizontal = 0
+grow_vertical = 1
 
 [node name="Timer" type="Timer" parent="." unique_id=605579673]
 unique_name_in_owner = true

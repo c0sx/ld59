@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://iherpdf64hqm"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_qm6qd"]
+[ext_resource type="Texture2D" uid="uid://bri8kfbn6pw21" path="res://data/events/Gaia DR3 438726/dark-nova.png" id="2_un2u4"]
+
+[resource]
+script = ExtResource("1_qm6qd")
+texture = ExtResource("2_un2u4")
+name = "Gaia DR3 438726"
+description = "parallax, uncertain"
+is_anomaly = true
+metadata/_custom_type_script = "uid://b8lnirribpset"

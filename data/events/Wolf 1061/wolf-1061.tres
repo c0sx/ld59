@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://dkr4ul22ergha"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_ji48b"]
+[ext_resource type="Texture2D" uid="uid://dwjdsosn5oonm" path="res://data/events/Wolf 1061/dark-nova.png" id="2_ma3ha"]
+
+[resource]
+script = ExtResource("1_ji48b")
+texture = ExtResource("2_ma3ha")
+name = "Wolf 1061"
+description = "M-type, planetary system"
+is_anomaly = true
+metadata/_custom_type_script = "uid://b8lnirribpset"

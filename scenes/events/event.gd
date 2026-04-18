@@ -16,6 +16,12 @@ func _ready() -> void:
 	_notifier.screen_exited.connect(_on_screen_exited)
 
 	texture = event.texture
+	material = material.duplicate()
+	material.set_shader_parameter("amount", 0.0)
+
+
+func mark_analyzed() -> void:
+	material.set_shader_parameter("amount", 1.0)
 
 
 func _on_screen_entered() -> void:

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bm4i78xcw7in6"]
+
+[ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="1_maehi"]
+[ext_resource type="Script" uid="uid://10mj0gqck5co" path="res://ui/hud/progress/progress.gd" id="1_yg8vs"]
+
+[node name="Progress" type="Label" unique_id=679308264]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_maehi")
+theme_type_variation = &"Label_m"
+script = ExtResource("1_yg8vs")

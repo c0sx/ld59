@@ -19,7 +19,6 @@ extends Node2D
 @onready var _canvas: CanvasLayer = %CanvasLayer
 @onready var _ui_container: VBoxContainer = %VBoxContainer
 
-signal report_added(report: ReportData)
 signal closed
 
 var _reported_events: Array[Event]
@@ -27,7 +26,6 @@ var _events: Array[Event]
 var _interact_event: Event
 var _looking_disabled: bool
 var _tw: Tween
-var _report_completed: bool
 var _old_position: Vector2 = Vector2.ZERO
 
 
@@ -85,6 +83,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion:
 		_try_to_look(event.relative)
+
+
+func clear_events() -> void:
+	_reported_events.clear()
+	_events.clear()
+	_old_position = Vector2.ZERO
 
 
 func enter() -> void:
@@ -168,6 +172,9 @@ func _try_to_interact() -> void:
 	var closest: Event
 	var closest_dist: float = INF
 	for event in _events:
+		if _reported_events.has(event):
+			continue
+
 		var dist: float = abs(event.global_position.distance_to(camera.global_position))
 		if dist < closest_dist:
 			closest_dist = dist
@@ -266,9 +273,13 @@ func _on_focused() -> void:
 func _on_analyzed() -> void:
 	_stop_analyze()
 
-	var report := ReportData.new()
-	report_added.emit(report)
-	_report_completed = true
+	var report_data := ReportData.new()
+	report_data.texture = _interact_event.event.texture
+	report_data.event_data = _interact_event.event
+
+	EventBus.emit_report_added(report_data)
+
+	_interact_event.mark_analyzed()
 	_reported_events.append(_interact_event)
 	_show_notification(report_added_text)
 

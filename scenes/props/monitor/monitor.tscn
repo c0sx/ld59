@@ -3,11 +3,24 @@
 [ext_resource type="Texture2D" uid="uid://ccp750ombcms1" path="res://scenes/props/monitor/signal.png" id="1_gut86"]
 [ext_resource type="Script" uid="uid://djawe5qwb54rs" path="res://scenes/props/monitor/monitor.gd" id="2_gut86"]
 [ext_resource type="Texture2D" uid="uid://b6mk0pma61we6" path="res://scenes/props/monitor/monitor.png" id="2_xik1u"]
+[ext_resource type="Texture2D" uid="uid://bba7ook8tsjd6" path="res://scenes/props/monitor/monitor-error.png" id="4_d1mbv"]
+[ext_resource type="Texture2D" uid="uid://vktnjmc313rc" path="res://scenes/props/monitor/monitor-ok.png" id="4_hg3ae"]
+[ext_resource type="Texture2D" uid="uid://dlb3jl637b3fg" path="res://scenes/props/monitor/monitor-keep-silent.png" id="5_hg3ae"]
+[ext_resource type="Texture2D" uid="uid://bdh0lwtchtdyw" path="res://scenes/props/monitor/monitor-found.png" id="6_7fkrm"]
 
 [node name="Monitor" type="Node2D" unique_id=592590865]
 script = ExtResource("2_gut86")
 _default_texture = ExtResource("2_xik1u")
 _signal_texture = ExtResource("1_gut86")
+_ok_texture = ExtResource("4_hg3ae")
+_first_error_texture = ExtResource("4_d1mbv")
+_second_error_texture = ExtResource("5_hg3ae")
+_third_error_texture = ExtResource("6_7fkrm")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=634973249]
 unique_name_in_owner = true
+
+[node name="Timer" type="Timer" parent="." unique_id=909252748]
+unique_name_in_owner = true
+wait_time = 1.5
+one_shot = true

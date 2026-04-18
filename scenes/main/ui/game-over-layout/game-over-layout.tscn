@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://c68ye7e626b4x"]
+
+[ext_resource type="Script" uid="uid://bxda8amyv6p82" path="res://scenes/main/ui/game-over-layout/game-over-layout.gd" id="1_q6xk4"]
+[ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="2_nom20"]
+[ext_resource type="FontFile" uid="uid://b361oymapwflh" path="res://assets/fonts/basis33/basis33.ttf" id="3_bcojo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nom20"]
+bg_color = Color(0, 0, 0.023529412, 1)
+
+[node name="GameOverLayout" type="Panel" unique_id=442149154]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nom20")
+script = ExtResource("1_q6xk4")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2090859566]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=1654327826]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer" unique_id=600048888]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=1315861070]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_nom20")
+theme_type_variation = &"Label_m"
+text = "SIGNAL DETECTED
+
+You reached out.
+
+In a silent universe, that was a mistake.
+
+They heard you.
+
+Your planet was located, classified as a potential threat…
+and erased.
+
+In the Dark Forest, survival belongs to those who remain unseen.
+
+Game Over"
+
+[node name="Button" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=551667930]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_fonts/font = ExtResource("3_bcojo")
+text = "Again"

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ln3un25loepc"
-path="res://.godot/imported/nova.png-e1e280fc800f532482c9ec74e2cd557e.ctex"
+uid="uid://ut5kpu5j1uxt"
+path="res://.godot/imported/nova.png-8abb1f3e396f81e9fd5820d05a71bacb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/events/nova/nova.png"
-dest_files=["res://.godot/imported/nova.png-e1e280fc800f532482c9ec74e2cd557e.ctex"]
+source_file="res://data/events/Wolf 1061/nova.png"
+dest_files=["res://.godot/imported/nova.png-8abb1f3e396f81e9fd5820d05a71bacb.ctex"]
 
 [params]
 

@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://b055n8iaw8xf6"]
+
+[ext_resource type="Script" uid="uid://d3fy2w2c0opot" path="res://scenes/main/ui/victory-layout/victory-layout.gd" id="1_5vp4q"]
+[ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="1_263nl"]
+[ext_resource type="FontFile" uid="uid://b361oymapwflh" path="res://assets/fonts/basis33/basis33.ttf" id="2_5vp4q"]
+
+[node name="VictoryLayout" type="Panel" unique_id=2131656852]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5vp4q")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=129383784]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=143490308]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer" unique_id=332224672]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_263nl")
+theme_type_variation = &"Label_m"
+text = "RESEARCH COMPLETED
+
+You kept working.
+
+Humanity needs progress, even if it’s dangerous.
+You found ways to move forward without drawing attention.
+
+Thank you for playing"
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1178472163]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_fonts/font = ExtResource("2_5vp4q")
+text = "Again"

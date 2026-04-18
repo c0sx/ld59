@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://bjrklkn63ndnm"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_ju255"]
+[ext_resource type="Texture2D" uid="uid://dtdtpf1i56qom" path="res://data/events/BD+17 3248/nova.png" id="2_tio03"]
+
+[resource]
+script = ExtResource("1_ju255")
+texture = ExtResource("2_tio03")
+name = "BD+17 3248"
+description = "metal-poor, halo"
+metadata/_custom_type_script = "uid://b8lnirribpset"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://csggg25ldj48k"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_apx03"]
+[ext_resource type="Texture2D" uid="uid://bx7gpjlol82k2" path="res://data/events/Gliese 892/nova.png" id="2_6gafj"]
+
+[resource]
+script = ExtResource("1_apx03")
+texture = ExtResource("2_6gafj")
+name = "Gliese 892"
+description = "M-dwarf, active"
+metadata/_custom_type_script = "uid://b8lnirribpset"

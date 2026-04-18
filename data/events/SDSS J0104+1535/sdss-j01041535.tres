@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://cgixybqu0vgsc"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_e6nd3"]
+[ext_resource type="Texture2D" uid="uid://caamrijgyktcc" path="res://data/events/SDSS J0104+1535/nova.png" id="2_4ad4o"]
+
+[resource]
+script = ExtResource("1_e6nd3")
+texture = ExtResource("2_4ad4o")
+name = "SDSS J0104+1535"
+description = "subdwarf, low metallicity"
+metadata/_custom_type_script = "uid://b8lnirribpset"
