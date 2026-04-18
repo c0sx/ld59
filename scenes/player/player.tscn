@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dxknf6olx7u5x"]
+
+[ext_resource type="Texture2D" uid="uid://c58y7mf4iqauw" path="res://scenes/player/player.png" id="1_8afob"]
+[ext_resource type="Script" uid="uid://bljqibrw1ebrl" path="res://scenes/player/player.gd" id="1_dovo2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8afob"]
+size = Vector2(9, 10)
+
+[node name="Player" type="CharacterBody2D" unique_id=1414958135]
+motion_mode = 1
+script = ExtResource("1_dovo2")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=485497185]
+texture = ExtResource("1_8afob")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1351457333]
+position = Vector2(0.5, 8)
+shape = SubResource("RectangleShape2D_8afob")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1149565716]
+unique_name_in_owner = true
+avoidance_enabled = true

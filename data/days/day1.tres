@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DayConfig" format=3 uid="uid://lcimlongaj2q"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_xertv"]
+[ext_resource type="Resource" uid="uid://17o1718rs7r0" path="res://data/events/nova/nova.tres" id="2_jx6is"]
+[ext_resource type="Script" uid="uid://crcxdmvxwwbm2" path="res://data/day-config.gd" id="2_q7ry3"]
+
+[resource]
+script = ExtResource("2_q7ry3")
+events = Array[ExtResource("1_xertv")]([ExtResource("2_jx6is"), ExtResource("2_jx6is"), ExtResource("2_jx6is")])
+metadata/_custom_type_script = "uid://crcxdmvxwwbm2"

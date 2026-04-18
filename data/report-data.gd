@@ -1,0 +1,2 @@
+class_name ReportData
+extends Resource

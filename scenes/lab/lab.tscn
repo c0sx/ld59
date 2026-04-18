@@ -1,0 +1,136 @@
+[gd_scene format=4 uid="uid://b6f4ylh84munp"]
+
+[ext_resource type="Texture2D" uid="uid://badtga6754ne4" path="res://scenes/lab/bg.png" id="1_4pbly"]
+[ext_resource type="Script" uid="uid://f47vi54s5lyh" path="res://scenes/lab/lab.gd" id="1_bi3ph"]
+[ext_resource type="Texture2D" uid="uid://ce63edsrfk1c7" path="res://scenes/lab/floor.png" id="1_gq2x7"]
+[ext_resource type="PackedScene" uid="uid://dxknf6olx7u5x" path="res://scenes/player/player.tscn" id="2_ngnlj"]
+[ext_resource type="Resource" uid="uid://lcimlongaj2q" path="res://data/days/day1.tres" id="2_umjok"]
+[ext_resource type="Texture2D" uid="uid://bstovbs6jnxtn" path="res://scenes/lab/desk.png" id="3_o632f"]
+[ext_resource type="Texture2D" uid="uid://dyjnr2vfgkc4a" path="res://scenes/lab/wall-bottom.png" id="4_l0ccj"]
+[ext_resource type="Texture2D" uid="uid://b8v1iv4jl1eeh" path="res://scenes/lab/wall.png" id="5_ucfl2"]
+[ext_resource type="PackedScene" uid="uid://gbc3acfyv036" path="res://scenes/cursor/cursor.tscn" id="6_n3cpm"]
+[ext_resource type="PackedScene" uid="uid://g8uehm02kv8d" path="res://scenes/props/pc/pc.tscn" id="7_w6r65"]
+[ext_resource type="Texture2D" uid="uid://bfmd3endlahj0" path="res://scenes/lab/chair.png" id="8_ucfl2"]
+[ext_resource type="PackedScene" uid="uid://dka70syft14bo" path="res://scenes/props/telescope/telescope.tscn" id="9_w6r65"]
+[ext_resource type="PackedScene" uid="uid://oy74b865qkdk" path="res://scenes/props/monitor/monitor.tscn" id="10_bfyp6"]
+[ext_resource type="PackedScene" uid="uid://ceow8wk1kxbsx" path="res://scenes/props/bed/bed.tscn" id="11_0mjck"]
+[ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="12_n4wn5"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ngnlj"]
+texture = ExtResource("1_gq2x7")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w6r65"]
+texture = ExtResource("4_l0ccj")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n4wn5"]
+texture = ExtResource("5_ucfl2")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_4pbly"]
+sources/0 = SubResource("TileSetAtlasSource_ngnlj")
+sources/2 = SubResource("TileSetAtlasSource_w6r65")
+sources/3 = SubResource("TileSetAtlasSource_n4wn5")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n3cpm"]
+size = Vector2(48, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w6r65"]
+size = Vector2(20, 22)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_o632f"]
+vertices = PackedVector2Array(470, 270, 170, 270, 170, 162, 470, 162)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(160, 152, 336, 152, 336, 152, 480, 152, 480, 280, 160, 280)])
+
+[node name="Lab" type="Node2D" unique_id=1247354534]
+script = ExtResource("1_bi3ph")
+config = ExtResource("2_umjok")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1864471214]
+position = Vector2(320, 180)
+texture = ExtResource("1_4pbly")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=849809557]
+position = Vector2(160, 90)
+tile_map_data = PackedByteArray("AAAEAAIAAwAAAAAAAAAFAAIAAwAAAAAAAAAGAAIAAwAAAAAAAAAHAAIAAwAAAAAAAAAIAAIAAwAAAAAAAAAJAAIAAwAAAAAAAAAKAAIAAwAAAAAAAAALAAIAAwAAAAAAAAAMAAIAAwAAAAAAAAANAAIAAwAAAAAAAAAOAAIAAwAAAAAAAAAPAAIAAwAAAAAAAAAQAAIAAwAAAAAAAAARAAIAAwAAAAAAAAASAAIAAwAAAAAAAAATAAIAAwAAAAAAAAAEAAMAAgAAAAAAAAAEAAQAAAAAAAAAAAAEAAUAAAAAAAAAAAAEAAYAAAAAAAAAAAAEAAcAAAAAAAAAAAAEAAgAAAAAAAAAAAAEAAkAAAAAAAAAAAAEAAoAAAAAAAAAAAAEAAsAAAAAAAAAAAATAAMAAgAAAAAAAAATAAQAAAAAAAAAAAATAAUAAAAAAAAAAAATAAYAAAAAAAAAAAATAAcAAAAAAAAAAAATAAgAAAAAAAAAAAATAAkAAAAAAAAAAAATAAoAAAAAAAAAAAATAAsAAAAAAAAAAAAQAAsAAAAAAAAAAAAQAAoAAAAAAAAAAAAQAAkAAAAAAAAAAAAQAAgAAAAAAAAAAAAQAAcAAAAAAAAAAAAQAAYAAAAAAAAAAAAQAAUAAAAAAAAAAAAQAAQAAAAAAAAAAAAQAAMAAgAAAAAAAAAPAAMAAgAAAAAAAAAOAAMAAgAAAAAAAAANAAMAAgAAAAAAAAAMAAMAAgAAAAAAAAALAAMAAgAAAAAAAAAKAAMAAgAAAAAAAAAJAAMAAgAAAAAAAAAIAAMAAgAAAAAAAAAHAAMAAgAAAAAAAAAGAAMAAgAAAAAAAAAFAAMAAgAAAAAAAAAFAAQAAAAAAAAAAAAFAAUAAAAAAAAAAAAFAAYAAAAAAAAAAAAFAAcAAAAAAAAAAAAFAAgAAAAAAAAAAAAFAAkAAAAAAAAAAAAFAAoAAAAAAAAAAAAFAAsAAAAAAAAAAAAGAAsAAAAAAAAAAAAGAAoAAAAAAAAAAAAGAAkAAAAAAAAAAAAGAAgAAAAAAAAAAAAGAAcAAAAAAAAAAAAGAAYAAAAAAAAAAAAGAAUAAAAAAAAAAAAGAAQAAAAAAAAAAAAHAAQAAAAAAAAAAAAHAAUAAAAAAAAAAAAHAAYAAAAAAAAAAAAHAAcAAAAAAAAAAAAHAAgAAAAAAAAAAAAHAAkAAAAAAAAAAAAHAAoAAAAAAAAAAAAHAAsAAAAAAAAAAAAIAAsAAAAAAAAAAAAIAAoAAAAAAAAAAAAIAAkAAAAAAAAAAAAIAAgAAAAAAAAAAAAIAAcAAAAAAAAAAAAIAAYAAAAAAAAAAAAIAAUAAAAAAAAAAAAIAAQAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAUAAAAAAAAAAAAJAAYAAAAAAAAAAAAJAAcAAAAAAAAAAAAJAAgAAAAAAAAAAAAJAAkAAAAAAAAAAAAJAAoAAAAAAAAAAAAJAAsAAAAAAAAAAAAKAAsAAAAAAAAAAAAKAAoAAAAAAAAAAAAKAAkAAAAAAAAAAAAKAAgAAAAAAAAAAAAKAAcAAAAAAAAAAAAKAAYAAAAAAAAAAAAKAAUAAAAAAAAAAAAKAAQAAAAAAAAAAAALAAQAAAAAAAAAAAALAAUAAAAAAAAAAAALAAYAAAAAAAAAAAALAAcAAAAAAAAAAAALAAgAAAAAAAAAAAALAAkAAAAAAAAAAAALAAoAAAAAAAAAAAALAAsAAAAAAAAAAAAMAAsAAAAAAAAAAAAMAAoAAAAAAAAAAAAMAAkAAAAAAAAAAAAMAAgAAAAAAAAAAAAMAAcAAAAAAAAAAAAMAAYAAAAAAAAAAAAMAAUAAAAAAAAAAAAMAAQAAAAAAAAAAAANAAQAAAAAAAAAAAANAAUAAAAAAAAAAAANAAYAAAAAAAAAAAANAAcAAAAAAAAAAAANAAgAAAAAAAAAAAANAAkAAAAAAAAAAAANAAoAAAAAAAAAAAANAAsAAAAAAAAAAAAOAAsAAAAAAAAAAAAOAAoAAAAAAAAAAAAOAAkAAAAAAAAAAAAOAAgAAAAAAAAAAAAOAAcAAAAAAAAAAAAOAAYAAAAAAAAAAAAOAAUAAAAAAAAAAAAOAAQAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAAAAAAAAAAPAAsAAAAAAAAAAAARAAsAAAAAAAAAAAARAAoAAAAAAAAAAAARAAkAAAAAAAAAAAARAAgAAAAAAAAAAAARAAcAAAAAAAAAAAARAAYAAAAAAAAAAAARAAUAAAAAAAAAAAARAAQAAAAAAAAAAAARAAMAAgAAAAAAAAASAAMAAgAAAAAAAAASAAQAAAAAAAAAAAASAAUAAAAAAAAAAAASAAYAAAAAAAAAAAASAAcAAAAAAAAAAAASAAgAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAAAAAAAAAASAAsAAAAAAAAAAAAAAAAAAwAAAAAAAAABAAAAAwAAAAAAAAACAAAAAwAAAAAAAAADAAAAAwAAAAAAAAAEAAAAAwAAAAAAAAAFAAAAAwAAAAAAAAAGAAAAAwAAAAAAAAAHAAAAAwAAAAAAAAAIAAAAAwAAAAAAAAAJAAAAAwAAAAAAAAAKAAAAAwAAAAAAAAALAAAAAwAAAAAAAAAAAAEAAwAAAAAAAAABAAEAAwAAAAAAAAACAAEAAwAAAAAAAAADAAEAAwAAAAAAAAAEAAEAAwAAAAAAAAAFAAEAAwAAAAAAAAAGAAEAAwAAAAAAAAAHAAEAAwAAAAAAAAAIAAEAAwAAAAAAAAAJAAEAAwAAAAAAAAAKAAEAAwAAAAAAAAALAAEAAwAAAAAAAAAMAAEAAwAAAAAAAAAMAAAAAwAAAAAAAAANAAAAAwAAAAAAAAAOAAAAAwAAAAAAAAAPAAAAAwAAAAAAAAAQAAAAAwAAAAAAAAARAAAAAwAAAAAAAAASAAAAAwAAAAAAAAATAAAAAwAAAAAAAAATAAEAAwAAAAAAAAASAAEAAwAAAAAAAAARAAEAAwAAAAAAAAAQAAEAAwAAAAAAAAAPAAEAAwAAAAAAAAAOAAEAAwAAAAAAAAANAAEAAwAAAAAAAAAAAAIAAwAAAAAAAAABAAIAAwAAAAAAAAACAAIAAwAAAAAAAAADAAIAAwAAAAAAAAADAAMAAgAAAAAAAAACAAMAAgAAAAAAAAABAAMAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAAQAAAAAAAAAAAABAAQAAAAAAAAAAAACAAQAAAAAAAAAAAADAAQAAAAAAAAAAAADAAUAAAAAAAAAAAACAAUAAAAAAAAAAAABAAUAAAAAAAAAAAABAAYAAAAAAAAAAAAAAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAAAAUAAAAAAAAAAAADAAcAAAAAAAAAAAACAAcAAAAAAAAAAAABAAcAAAAAAAAAAAABAAgAAAAAAAAAAAAAAAgAAAAAAAAAAAACAAgAAAAAAAAAAAADAAgAAAAAAAAAAAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAoAAAAAAAAAAAABAAoAAAAAAAAAAAACAAoAAAAAAAAAAAADAAoAAAAAAAAAAAADAAsAAAAAAAAAAAACAAsAAAAAAAAAAAABAAsAAAAAAAAAAAAAAAsAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_4pbly")
+
+[node name="Props" type="Node2D" parent="." unique_id=1284254067]
+
+[node name="Desk" type="StaticBody2D" parent="Props" unique_id=1899593697]
+position = Vector2(400, 160)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Props/Desk" unique_id=2023555525]
+shape = SubResource("RectangleShape2D_n3cpm")
+
+[node name="Desk" type="Sprite2D" parent="Props/Desk" unique_id=60347914]
+texture = ExtResource("3_o632f")
+
+[node name="PC" parent="Props" unique_id=586183535 instance=ExtResource("7_w6r65")]
+unique_name_in_owner = true
+process_mode = 3
+position = Vector2(392, 152)
+
+[node name="Chair" type="StaticBody2D" parent="Props" unique_id=1422844100]
+unique_name_in_owner = true
+position = Vector2(390, 180)
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Props/Chair" unique_id=2055953071]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_w6r65")
+
+[node name="Sprite2D" type="Sprite2D" parent="Props/Chair" unique_id=703574642]
+texture = ExtResource("8_ucfl2")
+
+[node name="Telescope" parent="Props" unique_id=439330522 instance=ExtResource("9_w6r65")]
+unique_name_in_owner = true
+position = Vector2(175, 125)
+
+[node name="TelescopeTargetPoint" type="Node2D" parent="Props" unique_id=1338990419]
+unique_name_in_owner = true
+position = Vector2(218, 180)
+
+[node name="Monitor" parent="Props" unique_id=972134180 instance=ExtResource("10_bfyp6")]
+position = Vector2(304, 120)
+
+[node name="Bed" parent="Props" unique_id=839591278 instance=ExtResource("11_0mjck")]
+position = Vector2(200, 256)
+
+[node name="Cursor" parent="." unique_id=920140334 instance=ExtResource("6_n3cpm")]
+unique_name_in_owner = true
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=852759823]
+unique_name_in_owner = true
+navigation_polygon = SubResource("NavigationPolygon_o632f")
+
+[node name="Player" parent="NavigationRegion2D" unique_id=1414958135 instance=ExtResource("2_ngnlj")]
+unique_name_in_owner = true
+position = Vector2(250, 200)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2018082166]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=436368726]
+unique_name_in_owner = true
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.5
+offset_top = -23.0
+offset_right = 52.5
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("12_n4wn5")
+text = "Report added"
+horizontal_alignment = 1
+
+[node name="Timer" type="Timer" parent="." unique_id=605579673]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true

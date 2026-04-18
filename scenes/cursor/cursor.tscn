@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://gbc3acfyv036"]
+
+[ext_resource type="Texture2D" uid="uid://b36f2rapsgwgc" path="res://scenes/cursor/cursor.png" id="1_8dyx8"]
+[ext_resource type="Script" uid="uid://d2wcv7p5eboqe" path="res://scenes/cursor/cursor.gd" id="2_hu3fh"]
+
+[node name="Cursor" type="Node2D" unique_id=15663878]
+script = ExtResource("2_hu3fh")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1186072459]
+position = Vector2(0, -8)
+texture = ExtResource("1_8dyx8")

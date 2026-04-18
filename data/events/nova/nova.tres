@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://17o1718rs7r0"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_xisp2"]
+[ext_resource type="Texture2D" uid="uid://ln3un25loepc" path="res://data/events/nova/nova.png" id="2_dajgg"]
+
+[resource]
+script = ExtResource("1_xisp2")
+texture = ExtResource("2_dajgg")
+metadata/_custom_type_script = "uid://b8lnirribpset"

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://oy74b865qkdk"]
+
+[ext_resource type="Texture2D" uid="uid://ccp750ombcms1" path="res://scenes/props/monitor/signal.png" id="1_gut86"]
+[ext_resource type="Script" uid="uid://djawe5qwb54rs" path="res://scenes/props/monitor/monitor.gd" id="2_gut86"]
+
+[node name="Monitor" type="Sprite2D" unique_id=972134180]
+texture = ExtResource("1_gut86")
+script = ExtResource("2_gut86")

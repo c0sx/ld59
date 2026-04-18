@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://g8uehm02kv8d"]
+
+[ext_resource type="Script" uid="uid://bhbuw4k5egdsf" path="res://scenes/props/pc/pc.gd" id="1_4brrl"]
+[ext_resource type="Texture2D" uid="uid://di1dc84t4e7qh" path="res://scenes/props/pc/pc.png" id="1_vayil"]
+[ext_resource type="Shader" uid="uid://7ki37lbbt1g1" path="res://shader/outline.gdshader" id="2_vs0db"]
+[ext_resource type="Texture2D" uid="uid://deb6e3of4b1yh" path="res://scenes/props/pc/progress.png" id="4_kx2pw"]
+[ext_resource type="Texture2D" uid="uid://blrajnk8sel1a" path="res://scenes/props/pc/progress-base.png" id="4_tb037"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mlliy"]
+size = Vector2(32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kx2pw"]
+shader = ExtResource("2_vs0db")
+shader_parameter/enabled = false
+shader_parameter/outline_color = Color(0, 1, 0, 1)
+shader_parameter/outline_width = 1.0
+
+[node name="PC" type="Area2D" unique_id=586183535]
+script = ExtResource("1_4brrl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1154379006]
+shape = SubResource("RectangleShape2D_mlliy")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=705029034]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_kx2pw")
+texture = ExtResource("1_vayil")
+
+[node name="Timer" type="Timer" parent="." unique_id=1007276343]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=765856853]
+unique_name_in_owner = true
+offset_top = -32.0
+offset_right = 22.0
+offset_bottom = -14.0
+value = 100.0
+texture_under = ExtResource("4_tb037")
+texture_progress = ExtResource("4_kx2pw")

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://b3qe8km4p55cc"]
+
+[ext_resource type="Script" uid="uid://64pd3dghh2yy" path="res://scenes/events/event.gd" id="1_kxbol"]
+
+[node name="Event" type="Sprite2D" unique_id=1605814883]
+script = ExtResource("1_kxbol")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=701614679]
+unique_name_in_owner = true
