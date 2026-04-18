@@ -1,6 +1,7 @@
 class_name Lab
 extends Node2D
 
+@export var config: DayConfig
 @export var camera: Camera2D
 
 @onready var _player: Player = %Player
@@ -12,15 +13,22 @@ extends Node2D
 @onready var _label: Label = %Label
 @onready var _notification_timer: Timer = %Timer
 @onready var _telescope_point: Node2D = %TelescopeTargetPoint
+@onready var _bed: Bed = %Bed
+@onready var _bed_point: Node2D = %BedTargetPoint
+@onready var _event_timer: Timer = %EventTimer
+@onready var _monitor: Monitor = %Monitor
 
+signal new_event(event_data: EventData)
 signal looked_into_telescope
 
 var _open_telescope_intent: bool
 var _open_pc_intent: bool
+var _sleep_intent: bool
 var _reports: Array[ReportData]
 
 
 func _ready() -> void:
+	assert(config != null, "config is not set")
 	assert(camera != null, "camera is not set")
 	assert(_player != null, "player is not set")
 	assert(_nav_region != null, "nav regions is not set")
@@ -31,14 +39,22 @@ func _ready() -> void:
 	assert(_label != null, "label is not set")
 	assert(_notification_timer != null, "notification timer is not set")
 	assert(_telescope_point != null, "telescope point is not set")
+	assert(_bed != null, "bed is not set")
+	assert(_bed_point != null, "bed point is not set")
+	assert(_event_timer != null, "event timer is not set")
+	assert(_monitor != null, "monitor is not set")
 
 	_player.move_finished.connect(_on_move_finished)
 	_telescope.clicked.connect(_on_telescope_clicked)
 	_pc.clicked.connect(_on_pc_clicked)
 	_pc.reports_sent.connect(_on_reports_sent)
 	_notification_timer.timeout.connect(_on_timeout)
+	_bed.clicked.connect(_on_bed_clicked)
+	_event_timer.timeout.connect(_on_event_timer_timeout)
 
 	_cursor.visible = false
+
+	_event_timer.start()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -52,6 +68,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if _is_point_on_navmesh(pos):
 			_open_telescope_intent = false
 			_open_pc_intent = false
+			_sleep_intent = false
+
 			_cursor.global_position = pos
 			_cursor.visible = true
 			_player.move_to(pos)
@@ -64,6 +82,8 @@ func enter() -> void:
 
 
 func add_report(data: ReportData) -> void:
+	_monitor.hide_signal()
+	_event_timer.start()
 	_reports.append(data)
 
 
@@ -90,7 +110,6 @@ func _try_to_send_reports() -> void:
 		return
 
 	_pc.send_reports(_reports)
-	_reports.clear()
 	get_tree().paused = true
 
 
@@ -112,6 +131,7 @@ func _on_telescope_clicked() -> void:
 
 	_open_telescope_intent = true
 	_open_pc_intent = false
+	_sleep_intent = false
 
 
 func _on_pc_clicked() -> void:
@@ -123,6 +143,19 @@ func _on_pc_clicked() -> void:
 
 	_open_pc_intent = true
 	_open_telescope_intent = false
+	_sleep_intent = false
+
+
+func _on_bed_clicked() -> void:
+	var pos := _bed_point.global_position
+
+	_cursor.global_position = pos
+	_cursor.visible = true
+	_player.move_to(pos)
+
+	_open_pc_intent = false
+	_open_telescope_intent = false
+	_sleep_intent = true
 
 
 func _on_timeout() -> void:
@@ -130,5 +163,15 @@ func _on_timeout() -> void:
 
 
 func _on_reports_sent() -> void:
+	_reports.clear()
 	_show_notification("All reports sent")
 	get_tree().paused = false
+
+
+func _on_event_timer_timeout() -> void:
+	var event_data: EventData = config.events.pop_front()
+	if not event_data:
+		return
+
+	_monitor.show_signal()
+	new_event.emit(event_data)

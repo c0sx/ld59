@@ -15,6 +15,7 @@ func _ready() -> void:
 	_telescope.process_mode = Node.PROCESS_MODE_DISABLED
 
 	_lab.looked_into_telescope.connect(_on_looked_into_telescope)
+	_lab.new_event.connect(_on_new_event)
 	_telescope.report_added.connect(_on_report_added)
 	_telescope.closed.connect(_on_look_stopped)
 
@@ -44,3 +45,7 @@ func _on_look_stopped() -> void:
 
 func _on_report_added(report_data: ReportData) -> void:
 	_lab.add_report(report_data)
+
+
+func _on_new_event(event_data: EventData) -> void:
+	_telescope.register_new_event(event_data)

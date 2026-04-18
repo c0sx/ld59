@@ -2,7 +2,12 @@
 
 [ext_resource type="Texture2D" uid="uid://ccp750ombcms1" path="res://scenes/props/monitor/signal.png" id="1_gut86"]
 [ext_resource type="Script" uid="uid://djawe5qwb54rs" path="res://scenes/props/monitor/monitor.gd" id="2_gut86"]
+[ext_resource type="Texture2D" uid="uid://b6mk0pma61we6" path="res://scenes/props/monitor/monitor.png" id="2_xik1u"]
 
-[node name="Monitor" type="Sprite2D" unique_id=972134180]
-texture = ExtResource("1_gut86")
+[node name="Monitor" type="Node2D" unique_id=592590865]
 script = ExtResource("2_gut86")
+_default_texture = ExtResource("2_xik1u")
+_signal_texture = ExtResource("1_gut86")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=634973249]
+unique_name_in_owner = true

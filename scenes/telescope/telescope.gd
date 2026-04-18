@@ -98,7 +98,6 @@ func enter() -> void:
 	camera.global_position = pos
 	camera.make_current()
 
-	_spawn()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
@@ -126,33 +125,32 @@ func _fit_in_borders(relative: Vector2) -> Vector2:
 	return camera_pos
 
 
-func _spawn() -> void:
-	for event in config.events:
-		var sprite_rect := _sprite.get_rect()
-		var sprite_offset := sprite_rect.size / 2
-		var sprite_pos := _sprite.global_position
+func register_new_event(event: EventData) -> void:
+	var sprite_rect := _sprite.get_rect()
+	var sprite_offset := sprite_rect.size / 2
+	var sprite_pos := _sprite.global_position
 
-		var camera_rect := camera.get_viewport_rect()
-		var camera_offset := camera_rect.size / 2
+	var camera_rect := camera.get_viewport_rect()
+	var camera_offset := camera_rect.size / 2
 
-		var instance := event_scene.instantiate() as Event
-		instance.event = event
+	var instance := event_scene.instantiate() as Event
+	instance.event = event
 
-		var random_x := randf_range(
-			sprite_pos.x - sprite_offset.x + camera_offset.x,
-			sprite_pos.x + sprite_offset.x - camera_offset.x
-		)
+	var random_x := randf_range(
+		sprite_pos.x - sprite_offset.x + camera_offset.x,
+		sprite_pos.x + sprite_offset.x - camera_offset.x
+	)
 
-		var random_y := randf_range(
-			sprite_pos.y - sprite_offset.y + camera_offset.y,
-			sprite_pos.y + sprite_offset.y - camera_offset.y
-		)
+	var random_y := randf_range(
+		sprite_pos.y - sprite_offset.y + camera_offset.y,
+		sprite_pos.y + sprite_offset.y - camera_offset.y
+	)
 
-		_container.add_child(instance)
-		instance.global_position = Vector2(random_x, random_y)
+	_container.add_child(instance)
+	instance.global_position = Vector2(random_x, random_y)
 
-		instance.entered.connect(_on_event_entered)
-		instance.exited.connect(_on_event_exited)
+	instance.entered.connect(_on_event_entered)
+	instance.exited.connect(_on_event_exited)
 
 
 func _try_to_look(relative: Vector2) -> void:
@@ -181,7 +179,7 @@ func _try_to_interact() -> void:
 	_interact_event = closest
 	_looking_disabled = true
 
-	var is_focused: bool = closest.global_position == camera.global_position
+	var is_focused: bool = closest.global_position.distance_squared_to(camera.global_position) < 0.01
 	if not is_focused:
 		_focus_on_event()
 	else:

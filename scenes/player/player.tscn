@@ -11,6 +11,7 @@ motion_mode = 1
 script = ExtResource("1_dovo2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=485497185]
+y_sort_enabled = true
 texture = ExtResource("1_8afob")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1351457333]
