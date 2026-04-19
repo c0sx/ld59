@@ -17,6 +17,7 @@ extends Node2D
 @onready var _error_label: Label = %ErrorLabel
 @onready var _audio: AudioStreamPlayer2D = %AudioStreamPlayer2D
 
+var _queue: Array[String]
 
 func _ready() -> void:
   assert(ok_stream != null, "ok stream is not set")
@@ -69,10 +70,16 @@ func _show_error_message(msg: String) -> void:
 func _on_ok_report_sent(_data: ReportData) -> void:
   _show_ok_message(ok_message)
 
+  _queue.append(loading_coords_message)
+
 
 func _on_timeout() -> void:
   _error_label.visible = false
   _ok_label.visible = false
+
+  if _queue.size() > 0:
+    var next_msg: String = _queue.pop_front()
+    _show_ok_message(next_msg, false)
 
   if _error_label.text == third_error_message:
     EventBus.emit_game_over()
@@ -86,6 +93,8 @@ func _on_error_report_sent(_data: ReportData, errors_counter: int) -> void:
   elif errors_counter == 3:
     _show_error_message(third_error_message)
 
+  _queue.append(loading_coords_message)
+
 
 func _on_report_added(_data: ReportData) -> void:
   _error_label.visible = false
@@ -97,6 +106,8 @@ func _on_report_added(_data: ReportData) -> void:
 func _on_report_skipped(_data: ReportData) -> void:
   _error_label.visible = false
   _ok_label.visible = false
+
+  _show_ok_message(loading_coords_message, false)
 
 
 func _on_new_event(_event: EventData) -> void:

@@ -8,4 +8,5 @@ script = ExtResource("1_ju255")
 textures = Array[Texture]([ExtResource("2_tio03")])
 name = "BD+17 3248"
 description = "Metal-poor, halo"
+is_anomaly = true
 metadata/_custom_type_script = "uid://b8lnirribpset"
