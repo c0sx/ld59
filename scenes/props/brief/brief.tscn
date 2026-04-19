@@ -28,7 +28,7 @@ texture = ExtResource("1_qbsgm")
 
 [node name="Cursor" parent="." unique_id=15663878 instance=ExtResource("3_r12xs")]
 unique_name_in_owner = true
-position = Vector2(1, -1)
+position = Vector2(1, -12)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=579315618]
 unique_name_in_owner = true
@@ -38,6 +38,7 @@ shape = SubResource("RectangleShape2D_r12xs")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=43151796]
 unique_name_in_owner = true
+visible = false
 
 [node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1912426533]
 custom_minimum_size = Vector2(350, 300)

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://csnykm5670u4h"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_4ygbg"]
+[ext_resource type="Texture2D" uid="uid://cnarjg5oseel2" path="res://data/events/mmd90/mmd90.png" id="2_f5r5t"]
+
+[resource]
+script = ExtResource("1_4ygbg")
+textures = Array[Texture]([ExtResource("2_f5r5t")])
+name = "MMD-90 278"
+description = "G-Type, solar negative"
+metadata/_custom_type_script = "uid://b8lnirribpset"

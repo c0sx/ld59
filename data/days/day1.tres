@@ -14,8 +14,10 @@
 [ext_resource type="Resource" uid="uid://dkr4ul22ergha" path="res://data/events/Wolf 1061/wolf-1061.tres" id="11_2jbyn"]
 [ext_resource type="Resource" uid="uid://cbexbdcwpmp2y" path="res://data/events/eye101/eye101.tres" id="12_3hfvd"]
 [ext_resource type="Resource" uid="uid://cmcdy8ulm4u5s" path="res://data/events/sh1n3/sh1n3.tres" id="13_5cywe"]
+[ext_resource type="Resource" uid="uid://c731at366jyy2" path="res://data/events/white33/white33.tres" id="14_w8ves"]
+[ext_resource type="Resource" uid="uid://csnykm5670u4h" path="res://data/events/mmd90/mmd90.tres" id="15_jlsex"]
 
 [resource]
 script = ExtResource("2_q7ry3")
-events = Array[ExtResource("1_xertv")]([ExtResource("7_mqiha"), ExtResource("3_e7nsc"), ExtResource("4_3hfvd"), ExtResource("5_5cywe"), ExtResource("6_w8ves"), ExtResource("7_jlsex"), ExtResource("8_mqiha"), ExtResource("9_7y1m0"), ExtResource("10_ssvip"), ExtResource("11_2jbyn"), ExtResource("12_3hfvd"), ExtResource("13_5cywe")])
+events = Array[ExtResource("1_xertv")]([ExtResource("7_mqiha"), ExtResource("3_e7nsc"), ExtResource("4_3hfvd"), ExtResource("5_5cywe"), ExtResource("6_w8ves"), ExtResource("7_jlsex"), ExtResource("8_mqiha"), ExtResource("9_7y1m0"), ExtResource("10_ssvip"), ExtResource("11_2jbyn"), ExtResource("12_3hfvd"), ExtResource("13_5cywe"), ExtResource("14_w8ves"), ExtResource("15_jlsex")])
 metadata/_custom_type_script = "uid://crcxdmvxwwbm2"

@@ -6,6 +6,6 @@
 [resource]
 script = ExtResource("1_dlev5")
 textures = Array[Texture]([ExtResource("2_8jdjc")])
-name = "SH-1-N-3"
-description = "Good Luck"
+name = "SH1-N3"
+description = "Like a star"
 metadata/_custom_type_script = "uid://b8lnirribpset"

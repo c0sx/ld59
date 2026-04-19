@@ -9,6 +9,7 @@ extends Node2D
 @export var third_error_message: String = 'found you'
 @export var new_event_message: String = 'new coords'
 @export var send_report_message: String = "send report"
+@export var loading_coords_message: String = "loading"
 
 @onready var _sprite: Sprite2D = %Sprite2D
 @onready var _timer: Timer = %Timer
@@ -30,6 +31,7 @@ func _ready() -> void:
   EventBus.error_report_sent.connect(_on_error_report_sent)
   EventBus.report_added.connect(_on_report_added)
   EventBus.report_skipped.connect(_on_report_skipped)
+  EventBus.brief_read.connect(_on_brief_read)
 
   _timer.timeout.connect(_on_timeout)
 
@@ -89,7 +91,7 @@ func _on_report_added(_data: ReportData) -> void:
   _error_label.visible = false
   _ok_label.visible = false
 
-  _show_ok_message(send_report_message)
+  _show_ok_message(send_report_message, false)
 
 
 func _on_report_skipped(_data: ReportData) -> void:
@@ -99,3 +101,7 @@ func _on_report_skipped(_data: ReportData) -> void:
 
 func _on_new_event(_event: EventData) -> void:
   _show_ok_message(new_event_message, false)
+
+
+func _on_brief_read() -> void:
+  _show_ok_message(loading_coords_message, false)

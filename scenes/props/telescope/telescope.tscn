@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://d2phau7wtlkpb" path="res://scenes/props/telescope/telescope.gd" id="1_n0cvs"]
 [ext_resource type="Shader" uid="uid://7ki37lbbt1g1" path="res://shader/outline.gdshader" id="2_1hv53"]
 [ext_resource type="Texture2D" uid="uid://c7xqibyr5hhxm" path="res://scenes/props/telescope/telescope2.png" id="3_e1tgv"]
+[ext_resource type="Texture2D" uid="uid://og3wru0u0w2f" path="res://scenes/props/telescope/animations/telescope22.png" id="4_d4os2"]
+[ext_resource type="Texture2D" uid="uid://dsyt1nkbk6xyw" path="res://scenes/props/telescope/animations/telescope23.png" id="5_23fyo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_giu3n"]
 shader = ExtResource("2_1hv53")
@@ -13,14 +15,41 @@ shader_parameter/outline_width = 1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n4wn5"]
 size = Vector2(128, 136)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qfbdb"]
+shader = ExtResource("2_1hv53")
+shader_parameter/enabled = false
+shader_parameter/outline_color = Color(0.84705883, 0.84705883, 0.9647059, 1)
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k6uhu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_d4os2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_23fyo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
 [node name="Telescope" type="Area2D" unique_id=2071856247]
 script = ExtResource("1_n0cvs")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=205190785]
 unique_name_in_owner = true
+visible = false
 material = SubResource("ShaderMaterial_giu3n")
 texture = ExtResource("3_e1tgv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=357029881]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_n4wn5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=328167661]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_qfbdb")
+sprite_frames = SubResource("SpriteFrames_k6uhu")
+frame_progress = 0.61056644

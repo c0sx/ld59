@@ -312,6 +312,7 @@ func _on_skipped() -> void:
 	_is_focused = false
 	_looking_disabled = false
 	_analyzing_container.visible = false
+	_focusing_container.visible = true
 
 	var report_data := ReportData.new()
 	var texture: Texture = _focus_event.event.textures.get(0)
@@ -364,6 +365,7 @@ func _on_send_signal() -> void:
 	_is_focused = false
 	_looking_disabled = false
 	_analyzing_container.visible = false
+	_focusing_container.visible = true
 
 	var report_data := ReportData.new()
 	var texture: Texture = _focus_event.event.textures.get(0)

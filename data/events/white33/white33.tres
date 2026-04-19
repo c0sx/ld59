@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://c731at366jyy2"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_6w4e7"]
+[ext_resource type="Texture2D" uid="uid://b6vk33o4g6nip" path="res://data/events/white33/white-dwarf.png" id="2_32x8c"]
+
+[resource]
+script = ExtResource("1_6w4e7")
+textures = Array[Texture]([ExtResource("2_32x8c")])
+name = "XHR-33-W"
+description = "White dwarf, very fast"
+metadata/_custom_type_script = "uid://b8lnirribpset"
