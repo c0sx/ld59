@@ -39,6 +39,9 @@ func move_to(pos: Vector2) -> void:
 
 	_agent.target_position = pos
 
+	if _animated_sprite.animation == "walk":
+		return
+
 	_animated_sprite.stop()
 	_animated_sprite.play("walk")
 

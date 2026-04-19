@@ -40,7 +40,7 @@ You kept working.
 Humanity needs progress, even if it’s dangerous.
 You found ways to move forward without drawing attention.
 
-Thank you for playing"
+Thank you for playing."
 
 [node name="Button" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1178472163]
 unique_name_in_owner = true
