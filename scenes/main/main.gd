@@ -8,6 +8,9 @@ extends Node2D
 
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	Engine.max_fps = 60
+
 	assert(_lab != null, "lab is not set")
 	assert(_telescope != null, "telescope is not set")
 	assert(_camera != null, "camera is not set")

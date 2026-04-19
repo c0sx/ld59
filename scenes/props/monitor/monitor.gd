@@ -7,7 +7,7 @@ extends Node2D
 @export var first_error_message: String = 'error'
 @export var second_error_message: String = 'keep silent'
 @export var third_error_message: String = 'found you'
-@export var new_event_message: String = 'new signal'
+@export var new_event_message: String = 'new coords'
 
 @onready var _sprite: Sprite2D = %Sprite2D
 @onready var _timer: Timer = %Timer

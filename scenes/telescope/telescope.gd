@@ -7,7 +7,7 @@ extends Node2D
 @export var camera: Camera2D
 @export var speed: float = 0.4
 @export var auto_moving_speed = 10
-@export var focus_duration: float = 0.75
+@export var focus_duration: float = 1.5
 @export var analyze_duration: float = 1
 @export var event_scene: PackedScene
 @export var report_added_text: String = "Report added"
@@ -28,7 +28,9 @@ extends Node2D
 signal closed
 
 const DISTANCE_THRESHOLD = 0.1
+const FAST_DISTANCE_THRESHOLD = 150
 
+var _registered_events: Array[Event]
 var _reported_events: Array[Event]
 var _events: Array[Event]
 var _focus_event: Event
@@ -85,6 +87,11 @@ func _process(delta: float) -> void:
 
 	var dir := camera.global_position.direction_to(child.global_position)
 	camera.global_position += dir * delta * auto_moving_speed
+
+
+func _input(event) -> void:
+	if event is InputEventMouseButton:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -209,6 +216,7 @@ func register_new_event(event: EventData) -> void:
 
 	instance.entered.connect(_on_event_entered)
 	instance.exited.connect(_on_event_exited)
+	_registered_events.append(instance)
 
 
 # look start
@@ -225,9 +233,6 @@ func _try_to_look(relative: Vector2) -> void:
 # focus start
 
 func _try_to_focus() -> void:
-	if _events.size() == 0:
-		return
-
 	var closest := _find_closest_event()
 	if not closest:
 		return
@@ -239,8 +244,12 @@ func _try_to_focus() -> void:
 	if distance < DISTANCE_THRESHOLD:
 		_on_focused()
 	else:
+		var dur := focus_duration
+		if distance < FAST_DISTANCE_THRESHOLD:
+			dur /= 2
+
 		_tw = get_tree().create_tween()
-		_tw.tween_property(camera, "global_position", _focus_event.global_position, focus_duration)
+		_tw.tween_property(camera, "global_position", _focus_event.global_position, dur)
 		_tw.tween_callback(_on_focused)
 
 
@@ -320,6 +329,8 @@ func _on_skipped() -> void:
 	_reported_events.append(_focus_event)
 	_show_notification(report_skipped_text)
 
+	_registered_events.erase(_focus_event)
+
 
 func _stop_skip() -> void:
 	if _tw:
@@ -370,6 +381,8 @@ func _on_send_signal() -> void:
 	_reported_events.append(_focus_event)
 	_show_notification(report_added_text)
 
+	_registered_events.erase(_focus_event)
+
 
 func _try_to_stop_send_signal() -> void:
 	if not _focus_event:
@@ -402,7 +415,7 @@ func _show_notification(message: String) -> void:
 func _find_closest_event() -> Event:
 	var closest: Event
 	var closest_dist: float = INF
-	for event in _events:
+	for event in _registered_events:
 		if _reported_events.has(event):
 			continue
 

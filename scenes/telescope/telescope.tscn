@@ -15,6 +15,7 @@ script = ExtResource("1_vb11p")
 progress_stream = ExtResource("2_cmpp8")
 focus_streams = Array[AudioStream]([ExtResource("3_umfwh"), ExtResource("4_f08xr"), ExtResource("5_56761")])
 camera = NodePath("Camera2D")
+speed = 0.6
 auto_moving_speed = 25
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=566847174]
