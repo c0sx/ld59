@@ -69,5 +69,5 @@ sprite_frames = SubResource("SpriteFrames_75vfm")
 animation = &"walk"
 frame_progress = 0.73448557
 
-[node name="Audio" type="AudioStreamPlayer2D" parent="." unique_id=664662826]
+[node name="Audio" type="AudioStreamPlayer" parent="." unique_id=2012882781]
 unique_name_in_owner = true

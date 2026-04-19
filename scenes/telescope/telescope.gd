@@ -23,7 +23,7 @@ extends Node2D
 @onready var _focusing_container: VBoxContainer = %FocusingHelper
 @onready var _analyzing_container: VBoxContainer = %AnalyzingHelper
 @onready var _focus_rect: TextureRect = %FocusRect
-@onready var _audio: AudioStreamPlayer2D = %AudioStreamPlayer2D
+@onready var _audio: AudioStreamPlayer = %AudioStreamPlayer2D
 
 signal closed
 

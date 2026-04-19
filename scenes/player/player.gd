@@ -7,7 +7,7 @@ extends CharacterBody2D
 
 @onready var _agent: NavigationAgent2D = %NavigationAgent2D
 @onready var _animated_sprite: AnimatedSprite2D = %AnimatedSprite2D
-@onready var _audio: AudioStreamPlayer2D = %Audio
+@onready var _audio: AudioStreamPlayer = %Audio
 
 signal move_finished
 

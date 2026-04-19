@@ -153,5 +153,5 @@ texture = ExtResource("5_cmpp8")
 unique_name_in_owner = true
 one_shot = true
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1439219705]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="." unique_id=1839709160]
 unique_name_in_owner = true
