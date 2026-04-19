@@ -14,10 +14,12 @@
 [ext_resource type="PackedScene" uid="uid://oy74b865qkdk" path="res://scenes/props/monitor/monitor.tscn" id="10_bfyp6"]
 [ext_resource type="PackedScene" uid="uid://ceow8wk1kxbsx" path="res://scenes/props/bed/bed.tscn" id="11_0mjck"]
 [ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="12_n4wn5"]
+[ext_resource type="PackedScene" uid="uid://bs21bdsmpbee6" path="res://scenes/props/brief/brief.tscn" id="12_tjk2v"]
 [ext_resource type="PackedScene" uid="uid://dcrx2hcod6hap" path="res://scenes/report/report.tscn" id="15_umjok"]
 [ext_resource type="PackedScene" uid="uid://chvdhiuohvcy7" path="res://scenes/lab/ui/rest-layout/rest-layout.tscn" id="16_8oevq"]
 [ext_resource type="PackedScene" uid="uid://bm4i78xcw7in6" path="res://ui/hud/progress/progress.tscn" id="16_tgbm7"]
 [ext_resource type="PackedScene" uid="uid://cnm1ihvjnnd6e" path="res://ui/hud/stars-counter/start-counter.tscn" id="17_rb8ap"]
+[ext_resource type="PackedScene" uid="uid://c8eaonl5n604l" path="res://ui/hud/errors/errors.tscn" id="20_a5vd3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ngnlj"]
 texture = ExtResource("1_gq2x7")
@@ -94,13 +96,21 @@ texture = ExtResource("8_ucfl2")
 unique_name_in_owner = true
 position = Vector2(175, 125)
 
-[node name="TelescopeTargetPoint" type="Node2D" parent="Props" unique_id=1338990419]
+[node name="TelescopeTargetPoint" type="Node2D" parent="Props/Telescope" unique_id=1338990419]
 unique_name_in_owner = true
-position = Vector2(232, 200)
+position = Vector2(57, 75)
 
 [node name="Monitor" parent="Props" unique_id=972134180 instance=ExtResource("10_bfyp6")]
 unique_name_in_owner = true
 position = Vector2(304, 112)
+
+[node name="Brief" parent="Props" unique_id=917745136 instance=ExtResource("12_tjk2v")]
+unique_name_in_owner = true
+position = Vector2(456, 160)
+
+[node name="BriefTargetPoint" type="Node2D" parent="Props/Brief" unique_id=892678327]
+unique_name_in_owner = true
+position = Vector2(0, 24)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=852759823]
 unique_name_in_owner = true
@@ -156,6 +166,10 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Progress" parent="CanvasLayer/VBoxContainer" unique_id=679308264 instance=ExtResource("16_tgbm7")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ErrorsCounter" parent="CanvasLayer/VBoxContainer" unique_id=529672338 instance=ExtResource("20_a5vd3")]
 unique_name_in_owner = true
 layout_mode = 2
 

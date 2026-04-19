@@ -26,7 +26,7 @@ func _ready() -> void:
 
 	_animated_sprite.stop()
 	_animated_sprite.play("idle")
-	_animated_sprite.frame_changed.connect(_on_frame_changed)
+	_animated_sprite.frame_changed.connect(_on_frame_changed.call_deferred)
 
 
 func get_reports() -> Array[ReportData]:
@@ -75,7 +75,7 @@ func _on_frame_changed() -> void:
 		var frame = _animated_sprite.frame
 		if frame % 2 == 0:
 			var stream: AudioStream = steps.pick_random()
-			var pitch := randf_range(-0.15, 0.15)
+			var pitch := randf_range(0, 0.15)
 			_audio.stream = stream
 			_audio.pitch_scale += pitch
 			_audio.play()

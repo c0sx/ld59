@@ -89,3 +89,9 @@ signal new_event(event_data: EventData)
 
 func emit_new_event(event_data: EventData) -> void:
   new_event.emit(event_data)
+
+
+signal brief_read
+
+func emit_brief_read() -> void:
+  brief_read.emit()

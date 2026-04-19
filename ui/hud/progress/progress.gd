@@ -3,9 +3,8 @@ extends Label
 
 var _total: int = 0
 var _current: int = 0
-var _right: int = 0
+var _right: int = 7
 var _errors: int = 0
-var _errors_total: int = 0
 
 
 func _ready() -> void:
@@ -39,12 +38,6 @@ func _on_show() -> void:
 
 func _on_events_initialized(events: Array[EventData]) -> void:
 	_total = events.size()
-
-	for event in events:
-		if event.is_anomaly:
-			_errors_total += 1
-		else:
-			_right += 1
 
 
 func _on_report_sent(report_data: ReportData) -> void:

@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://bs21bdsmpbee6"]
+
+[ext_resource type="Script" uid="uid://boumy88gwalxh" path="res://scenes/props/brief/brief.gd" id="1_cbrp2"]
+[ext_resource type="Texture2D" uid="uid://bi01qu6ger3v0" path="res://scenes/props/brief/texture.png" id="1_qbsgm"]
+[ext_resource type="Shader" uid="uid://7ki37lbbt1g1" path="res://shader/outline.gdshader" id="2_r12xs"]
+[ext_resource type="PackedScene" uid="uid://gbc3acfyv036" path="res://scenes/cursor/cursor.tscn" id="3_r12xs"]
+[ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="5_p5lty"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p5lty"]
+shader = ExtResource("2_r12xs")
+shader_parameter/enabled = false
+shader_parameter/outline_color = Color(0.84705883, 0.84705883, 0.9647059, 1)
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r12xs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n0pf8"]
+bg_color = Color(1, 0.9098039, 0.7607843, 1)
+border_color = Color(0, 0, 0, 1)
+
+[node name="Brief" type="Node2D" unique_id=917745136]
+script = ExtResource("1_cbrp2")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1989274376]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_p5lty")
+texture = ExtResource("1_qbsgm")
+
+[node name="Cursor" parent="." unique_id=15663878 instance=ExtResource("3_r12xs")]
+unique_name_in_owner = true
+position = Vector2(1, -1)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=579315618]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1471543110]
+shape = SubResource("RectangleShape2D_r12xs")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=43151796]
+unique_name_in_owner = true
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1912426533]
+custom_minimum_size = Vector2(350, 300)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_n0pf8")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Panel" unique_id=1575777409]
+custom_minimum_size = Vector2(200, 256)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Panel/MarginContainer" unique_id=208203878]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="CanvasLayer/Panel/MarginContainer/VBoxContainer" unique_id=1883692219]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme = ExtResource("5_p5lty")
+theme_type_variation = &"Label_s"
+text = "Hey.
+
+We’re running a bunch of observations to push things toward interstellar travel. 
+I’ll be sending you coordinates of nearby stars.
+Check them out  and send back reports through the terminal.
+Just… be careful with signals.
+If something feels off — better skip it.
+
+That’s the whole job."
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/Panel/MarginContainer/VBoxContainer" unique_id=1577512027]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme = ExtResource("5_p5lty")
+text = "Got it"

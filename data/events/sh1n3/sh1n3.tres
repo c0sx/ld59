@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://cmcdy8ulm4u5s"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_dlev5"]
+[ext_resource type="Texture2D" uid="uid://h1ui6w3mjg6c" path="res://data/events/sh1n3/star.png" id="2_8jdjc"]
+
+[resource]
+script = ExtResource("1_dlev5")
+textures = Array[Texture]([ExtResource("2_8jdjc")])
+name = "SH-1-N-3"
+description = "Good Luck"
+metadata/_custom_type_script = "uid://b8lnirribpset"

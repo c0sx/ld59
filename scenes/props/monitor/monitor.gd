@@ -4,10 +4,11 @@ extends Node2D
 @export var ok_stream: AudioStream
 @export var err_stream: AudioStream
 @export var ok_message: String = 'ok'
-@export var first_error_message: String = 'error'
+@export var first_error_message: String = 'danger'
 @export var second_error_message: String = 'keep silent'
 @export var third_error_message: String = 'found you'
 @export var new_event_message: String = 'new coords'
+@export var send_report_message: String = "send report"
 
 @onready var _sprite: Sprite2D = %Sprite2D
 @onready var _timer: Timer = %Timer
@@ -54,7 +55,7 @@ func _show_error_message(msg: String) -> void:
   _timer.stop()
   _error_label.visible = true
   _ok_label.visible = false
-  _ok_label.text = msg
+  _error_label.text = msg
 
   _audio.stop()
   _audio.stream = err_stream
@@ -87,6 +88,8 @@ func _on_error_report_sent(_data: ReportData, errors_counter: int) -> void:
 func _on_report_added(_data: ReportData) -> void:
   _error_label.visible = false
   _ok_label.visible = false
+
+  _show_ok_message(send_report_message)
 
 
 func _on_report_skipped(_data: ReportData) -> void:

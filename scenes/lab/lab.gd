@@ -20,13 +20,18 @@ extends Node2D
 @onready var _report: Report = %Report
 @onready var _progress: Label = %Progress
 @onready var _counter: Label = %StarsCounter
+@onready var _errors_counter: Label = %ErrorsCounter
+@onready var _brief: Brief = %Brief
+@onready var _brief_point: Node2D = %BriefTargetPoint
 
 signal looked_into_telescope
 
 var _open_telescope_intent: bool
 var _open_pc_intent: bool
 var _sleep_intent: bool
+var _read_brief_intent: bool
 var _events: Array[EventData]
+var _is_completed: bool = false
 
 
 func _ready() -> void:
@@ -47,15 +52,21 @@ func _ready() -> void:
 	assert(_monitor != null, "monitor is not set")
 	assert(_progress != null, "progress is not set")
 	assert(_counter != null, "counters is not set")
+	assert(_brief != null, "brief is not set")
+	assert(_brief_point != null, "brief point is not set")
+	assert(_errors_counter != null, "errors counter is not set")
 
 	EventBus.report_sent.connect(_on_report_sent)
 	EventBus.report_skipped.connect(_on_report_skipped)
+	EventBus.brief_read.connect(_on_brief_read)
+	EventBus.research_completed.connect(_on_research_completed)
 
 	_player.move_finished.connect(_on_move_finished)
 	_telescope.clicked.connect(_on_telescope_clicked)
 	_pc.clicked.connect(_on_pc_clicked)
 	_notification_timer.timeout.connect(_on_timeout)
 	_bed.clicked.connect(_on_bed_clicked)
+	_brief.clicked.connect(_on_brief_clicked)
 	_event_timer.timeout.connect(_on_event_timer_timeout)
 
 	_cursor.visible = false
@@ -64,9 +75,8 @@ func _ready() -> void:
 	var events := config.events.duplicate()
 	events.shuffle()
 	_events = events
-	EventBus.emit_events_initialized(_events)
 
-	_event_timer.start()
+	EventBus.emit_events_initialized(_events)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -81,6 +91,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			_open_telescope_intent = false
 			_open_pc_intent = false
 			_sleep_intent = false
+			_read_brief_intent = false
 
 			_cursor.global_position = pos
 			_cursor.visible = true
@@ -94,11 +105,13 @@ func enter() -> void:
 
 	_progress.visible = true
 	_counter.visible = true
+	_errors_counter.visible = true
 
 
 func _exit() -> void:
 	_progress.visible = false
 	_counter.visible = false
+	_errors_counter.visible = false
 
 
 func _is_point_on_navmesh(point: Vector2) -> bool:
@@ -123,6 +136,10 @@ func _try_to_sleep() -> void:
 	EventBus.emit_sleep_started()
 
 
+func _try_to_read_brief() -> void:
+	_brief.read_brief()
+
+
 func _show_notification(message: String, time: float = 1) -> void:
 	if not _notification_timer.is_stopped():
 		_notification_timer.stop()
@@ -145,6 +162,9 @@ func _on_move_finished() -> void:
 	if _sleep_intent:
 		_try_to_sleep()
 
+	if _read_brief_intent:
+		_try_to_read_brief()
+
 
 func _on_telescope_clicked() -> void:
 	var pos := _telescope_point.global_position
@@ -156,6 +176,7 @@ func _on_telescope_clicked() -> void:
 	_open_telescope_intent = true
 	_open_pc_intent = false
 	_sleep_intent = false
+	_read_brief_intent = false
 
 
 func _on_pc_clicked() -> void:
@@ -168,6 +189,7 @@ func _on_pc_clicked() -> void:
 	_open_pc_intent = true
 	_open_telescope_intent = false
 	_sleep_intent = false
+	_read_brief_intent = false
 
 
 func _on_bed_clicked() -> void:
@@ -180,6 +202,20 @@ func _on_bed_clicked() -> void:
 	_open_pc_intent = false
 	_open_telescope_intent = false
 	_sleep_intent = true
+	_read_brief_intent = false
+
+
+func _on_brief_clicked() -> void:
+	var pos := _brief_point.global_position
+
+	_cursor.global_position = pos
+	_cursor.visible = true
+	_player.move_to(pos)
+
+	_open_pc_intent = false
+	_open_telescope_intent = false
+	_sleep_intent = false
+	_read_brief_intent = true
 
 
 func _on_timeout() -> void:
@@ -189,7 +225,8 @@ func _on_timeout() -> void:
 func _on_event_timer_timeout() -> void:
 	var event_data: EventData = _events.pop_front()
 	if not event_data:
-		EventBus.emit_research_failed()
+		if not _is_completed:
+			EventBus.emit_research_failed()
 		return
 
 	EventBus.emit_new_event(event_data)
@@ -202,3 +239,12 @@ func _on_report_sent(_data: ReportData) -> void:
 
 func _on_report_skipped(_data: ReportData) -> void:
 	_event_timer.start()
+
+
+func _on_brief_read() -> void:
+	_event_timer.start()
+
+
+func _on_research_completed() -> void:
+	_event_timer.stop()
+	_is_completed = true

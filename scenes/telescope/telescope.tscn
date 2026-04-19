@@ -97,7 +97,7 @@ grow_vertical = 0
 layout_mode = 2
 theme = ExtResource("5_wsfho")
 theme_type_variation = &"Label_m"
-text = "Press 'Esc' to exit"
+text = "Press 'Q' to exit"
 
 [node name="Space" type="Label" parent="CanvasLayer/FocusingHelper" unique_id=803411786]
 layout_mode = 2
@@ -119,7 +119,7 @@ grow_vertical = 0
 layout_mode = 2
 theme = ExtResource("5_wsfho")
 theme_type_variation = &"Label_m"
-text = "Press 'Esc' to unfocus"
+text = "Press 'Q' to unfocus"
 
 [node name="Left" type="Label" parent="CanvasLayer/AnalyzingHelper" unique_id=1195531915]
 layout_mode = 2

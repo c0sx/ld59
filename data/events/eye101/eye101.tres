@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://cbexbdcwpmp2y"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_6qvqt"]
+[ext_resource type="Texture2D" uid="uid://dt5sqhegu58dr" path="res://data/events/eye101/eye1.png" id="2_wg5e7"]
+[ext_resource type="Texture2D" uid="uid://b4wqpljtxgrr" path="res://data/events/eye101/eye2.png" id="3_ynb2v"]
+[ext_resource type="Texture2D" uid="uid://bhg8frr5dx36i" path="res://data/events/eye101/eye3.png" id="4_7kdbp"]
+[ext_resource type="Texture2D" uid="uid://cc62t43oxu7kw" path="res://data/events/eye101/eye4.png" id="5_orbg6"]
+
+[resource]
+script = ExtResource("1_6qvqt")
+textures = Array[Texture]([ExtResource("2_wg5e7"), ExtResource("3_ynb2v"), ExtResource("4_7kdbp"), ExtResource("5_orbg6")])
+name = "Eye 101"
+description = "Something terrifying"
+is_anomaly = true
+metadata/_custom_type_script = "uid://b8lnirribpset"

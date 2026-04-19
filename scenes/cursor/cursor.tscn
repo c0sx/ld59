@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://gbc3acfyv036"]
 
-[ext_resource type="Texture2D" uid="uid://b36f2rapsgwgc" path="res://scenes/cursor/cursor.png" id="1_8dyx8"]
 [ext_resource type="Script" uid="uid://d2wcv7p5eboqe" path="res://scenes/cursor/cursor.gd" id="2_hu3fh"]
 [ext_resource type="Texture2D" uid="uid://bdc11uea3n2qo" path="res://scenes/cursor/cursor1.png" id="3_75asm"]
 [ext_resource type="Texture2D" uid="uid://diut8ajqkfyho" path="res://scenes/cursor/cursor2.png" id="4_e5wmr"]
@@ -26,13 +25,10 @@ animations = [{
 [node name="Cursor" type="Node2D" unique_id=15663878]
 script = ExtResource("2_hu3fh")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1186072459]
-visible = false
-position = Vector2(0, -8)
-texture = ExtResource("1_8dyx8")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=722312550]
 unique_name_in_owner = true
+z_index = 999
+y_sort_enabled = true
 position = Vector2(0, -9)
 sprite_frames = SubResource("SpriteFrames_nghos")
 frame_progress = 0.14109102
