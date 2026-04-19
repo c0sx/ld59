@@ -1,12 +1,19 @@
 [gd_scene format=3 uid="uid://coajks8f24vtd"]
 
 [ext_resource type="Script" uid="uid://bhwlgopwivabx" path="res://scenes/telescope/telescope.gd" id="1_vb11p"]
+[ext_resource type="AudioStream" uid="uid://c2ikkppw7kmwy" path="res://scenes/telescope/sounds/progress.wav" id="2_cmpp8"]
 [ext_resource type="Texture2D" uid="uid://b432ay422fc7p" path="res://scenes/telescope/bg.png" id="2_mipnb"]
+[ext_resource type="AudioStream" uid="uid://r3xxiqm215w5" path="res://scenes/telescope/sounds/focus1.wav" id="3_umfwh"]
+[ext_resource type="AudioStream" uid="uid://6mjjp7pne5pi" path="res://scenes/telescope/sounds/focus2.wav" id="4_f08xr"]
 [ext_resource type="Texture2D" uid="uid://vni35xpg8wg8" path="res://scenes/telescope/lens.png" id="4_wsfho"]
+[ext_resource type="AudioStream" uid="uid://xxv45g3y7k80" path="res://scenes/telescope/sounds/focus3.wav" id="5_56761"]
+[ext_resource type="Texture2D" uid="uid://bfapxdmifec2b" path="res://scenes/telescope/focus.png" id="5_cmpp8"]
 [ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="5_wsfho"]
 
 [node name="Telescope" type="Node2D" unique_id=1875781477 node_paths=PackedStringArray("camera")]
 script = ExtResource("1_vb11p")
+progress_stream = ExtResource("2_cmpp8")
+focus_streams = Array[AudioStream]([ExtResource("3_umfwh"), ExtResource("4_f08xr"), ExtResource("5_56761")])
 camera = NodePath("Camera2D")
 auto_moving_speed = 25
 
@@ -40,7 +47,7 @@ texture = ExtResource("4_wsfho")
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" unique_id=958742313]
 unique_name_in_owner = true
 visible = false
-custom_minimum_size = Vector2(300, 30)
+custom_minimum_size = Vector2(300, 15)
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 1.0
@@ -49,10 +56,11 @@ anchor_bottom = 1.0
 offset_left = -150.0
 offset_top = -30.0
 offset_right = 150.0
-offset_bottom = -100.0
+offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("5_wsfho")
+value = 50.0
 show_percentage = false
 
 [node name="Label" type="Label" parent="CanvasLayer" unique_id=1168725733]
@@ -76,6 +84,7 @@ horizontal_alignment = 1
 
 [node name="FocusingHelper" type="VBoxContainer" parent="CanvasLayer" unique_id=884913129]
 unique_name_in_owner = true
+visible = false
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -109,14 +118,39 @@ grow_vertical = 0
 layout_mode = 2
 theme = ExtResource("5_wsfho")
 theme_type_variation = &"Label_m"
-text = "Hold 'Esc' to skip"
+text = "Press 'Esc' to unfocus"
 
-[node name="Space" type="Label" parent="CanvasLayer/AnalyzingHelper" unique_id=1195531915]
+[node name="Left" type="Label" parent="CanvasLayer/AnalyzingHelper" unique_id=1195531915]
 layout_mode = 2
 theme = ExtResource("5_wsfho")
 theme_type_variation = &"Label_m"
-text = "Hold 'Space' to send signal"
+text = "Hold 'LMB' to send signal"
+
+[node name="Right" type="Label" parent="CanvasLayer/AnalyzingHelper" unique_id=1851801689]
+layout_mode = 2
+theme = ExtResource("5_wsfho")
+theme_type_variation = &"Label_m"
+text = "Hold 'RMB' to skip"
+
+[node name="FocusRect" type="TextureRect" parent="CanvasLayer" unique_id=1287662466]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_cmpp8")
 
 [node name="Timer" type="Timer" parent="." unique_id=417931842]
 unique_name_in_owner = true
 one_shot = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1439219705]
+unique_name_in_owner = true

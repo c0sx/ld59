@@ -31,6 +31,11 @@ signal sleep_started()
 func emit_sleep_started() -> void:
   sleep_started.emit()
 
+signal sleep_ended()
+
+func emit_sleep_ended() -> void:
+  sleep_ended.emit()
+
 
 signal event_analyzed(data: EventData)
 
@@ -62,13 +67,25 @@ func emit_game_over() -> void:
   game_over.emit()
 
 
-signal progress_increased(value: float)
-
-func emit_progress_increased(value: float) -> void:
-  progress_increased.emit(value)
-
-
 signal research_completed()
 
 func emit_research_completed() -> void:
   research_completed.emit()
+
+
+signal research_failed()
+
+func emit_research_failed() -> void:
+  research_failed.emit()
+
+
+signal events_initialized(events: Array[EventData])
+
+func emit_events_initialized(events: Array[EventData]) -> void:
+  events_initialized.emit(events)
+
+
+signal new_event(event_data: EventData)
+
+func emit_new_event(event_data: EventData) -> void:
+  new_event.emit(event_data)

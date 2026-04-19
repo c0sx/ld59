@@ -26,4 +26,5 @@ func _on_sleep_started() -> void:
 
 
 func _on_timeout() -> void:
+	EventBus.emit_sleep_ended()
 	visible = false

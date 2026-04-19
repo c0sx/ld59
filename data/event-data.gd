@@ -1,7 +1,7 @@
 class_name EventData
 extends Resource
 
-@export var texture: Texture
+@export var textures: Array[Texture]
 @export var name: String
 @export var description: String
 @export var is_anomaly: bool

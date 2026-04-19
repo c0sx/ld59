@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://d3cfurt6egvhp"]
+
+[ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="1_aa3sb"]
+[ext_resource type="Script" uid="uid://b8n0d52ycj6qt" path="res://scenes/main/ui/research-failed-layout/research-failed-layout.gd" id="1_y01lg"]
+[ext_resource type="FontFile" uid="uid://b361oymapwflh" path="res://assets/fonts/basis33/basis33.ttf" id="2_y01lg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nom20"]
+bg_color = Color(0, 0, 0.023529412, 1)
+
+[node name="ResearchFailedLayout" type="Panel" unique_id=911973123]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nom20")
+script = ExtResource("1_y01lg")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=336043356]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=898291940]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer" unique_id=881491749]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=662640557]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_aa3sb")
+theme_type_variation = &"Label_m"
+text = "NO STARS LEFT
+
+You explored everything within reach.
+
+Progress has stopped.
+
+Humanity is still alive.
+But it cannot move forward.
+
+In the Dark Forest,
+running out of options is also an end.
+
+GAME OVER"
+
+[node name="Button" type="Button" parent="MarginContainer/ScrollContainer/VBoxContainer" unique_id=2145201175]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_fonts/font = ExtResource("2_y01lg")
+text = "Again"

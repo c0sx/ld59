@@ -1,12 +1,14 @@
 [gd_resource type="Resource" script_class="EventData" format=3 uid="uid://iherpdf64hqm"]
 
 [ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_qm6qd"]
-[ext_resource type="Texture2D" uid="uid://bri8kfbn6pw21" path="res://data/events/Gaia DR3 438726/dark-nova.png" id="2_un2u4"]
+[ext_resource type="Texture2D" uid="uid://5srivtw13p6r" path="res://data/events/Gaia DR3 438726/parallax2.png" id="3_iam3f"]
+[ext_resource type="Texture2D" uid="uid://cmvtu0kpx03xi" path="res://data/events/Gaia DR3 438726/parallax3.png" id="4_7lle3"]
+[ext_resource type="Texture2D" uid="uid://bj7sb1qcgr2ql" path="res://data/events/Gaia DR3 438726/parallax4.png" id="4_l12g7"]
 
 [resource]
 script = ExtResource("1_qm6qd")
-texture = ExtResource("2_un2u4")
+textures = Array[Texture]([ExtResource("3_iam3f"), ExtResource("4_7lle3"), ExtResource("4_l12g7")])
 name = "Gaia DR3 438726"
-description = "parallax, uncertain"
+description = "Parallax, uncertain"
 is_anomaly = true
 metadata/_custom_type_script = "uid://b8lnirribpset"

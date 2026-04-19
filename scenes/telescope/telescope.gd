@@ -1,6 +1,8 @@
 class_name Telescope
 extends Node2D
 
+@export var progress_stream: AudioStream
+@export var focus_streams: Array[AudioStream]
 @export var config: DayConfig
 @export var camera: Camera2D
 @export var speed: float = 0.4
@@ -20,8 +22,12 @@ extends Node2D
 @onready var _canvas: CanvasLayer = %CanvasLayer
 @onready var _focusing_container: VBoxContainer = %FocusingHelper
 @onready var _analyzing_container: VBoxContainer = %AnalyzingHelper
+@onready var _focus_rect: TextureRect = %FocusRect
+@onready var _audio: AudioStreamPlayer2D = %AudioStreamPlayer2D
 
 signal closed
+
+const DISTANCE_THRESHOLD = 0.1
 
 var _reported_events: Array[Event]
 var _events: Array[Event]
@@ -34,6 +40,8 @@ var _is_focused: bool
 
 
 func _ready() -> void:
+	assert(focus_streams.size() > 0, "empty focus streams")
+	assert(progress_stream != null, "progress stream is not set")
 	assert(config != null, "config is not set")
 	assert(camera != null, "camera is not set")
 	assert(_sprite != null, "sprite is not set")
@@ -45,11 +53,16 @@ func _ready() -> void:
 	assert(_canvas != null, "canvas layer is not set")
 	assert(_focusing_container != null, "focusing container is not set")
 	assert(_analyzing_container != null, "analyzing container is not set")
+	assert(_focus_rect != null, "focus rect is not set")
+	assert(_audio != null, "audio is not set")
+
+	EventBus.new_event.connect(_on_new_event)
 
 	_notification_timer.timeout.connect(_on_timeout)
 
 	_focusing_container.visible = false
 	_analyzing_container.visible = false
+	_focus_rect.visible = false
 	_progress.visible = false
 	_canvas.visible = false
 	_label.visible = false
@@ -92,16 +105,21 @@ func _unhandled_input(event: InputEvent) -> void:
 			_try_to_look(event.relative)
 	else:
 		if event.is_action_pressed(InputActions.Esc, false):
-			_try_to_skip()
+			_try_to_unfocus()
 
-		if event.is_action_released(InputActions.Esc):
-			_try_to_stop_skip()
+		if event is InputEventMouseButton:
+			var e := event as InputEventMouseButton
+			if e.button_index == MOUSE_BUTTON_RIGHT:
+				if e.pressed:
+					_try_to_skip()
+				else:
+					_try_to_stop_skip()
 
-		if event.is_action_pressed(InputActions.Interact, false):
-			_try_to_send_signal()
-
-		if event.is_action_released(InputActions.Interact):
-			_try_to_stop_send_signal()
+			if e.button_index == MOUSE_BUTTON_LEFT:
+				if e.pressed:
+					_try_to_send_signal()
+				else:
+					_try_to_stop_send_signal()
 
 		if event is InputEventMouseMotion:
 			_try_to_look(event.relative)
@@ -111,6 +129,7 @@ func enter() -> void:
 	_canvas.visible = true
 	_focusing_container.visible = true
 	_analyzing_container.visible = false
+	_focus_rect.visible = false
 	_looking_disabled = false
 
 	var pos := _old_position
@@ -121,6 +140,19 @@ func enter() -> void:
 	camera.make_current()
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+# unfocus
+
+func _try_to_unfocus() -> void:
+	if not _is_focused:
+		return
+
+	_is_focused = false
+	_looking_disabled = false
+	_focus_rect.visible = false
+	_focusing_container.visible = true
+	_analyzing_container.visible = false
 
 
 # close start
@@ -203,9 +235,13 @@ func _try_to_focus() -> void:
 	_focus_event = closest
 	_looking_disabled = true
 
-	_tw = get_tree().create_tween()
-	_tw.tween_property(camera, "global_position", _focus_event.global_position, focus_duration)
-	_tw.tween_callback(_on_focused)
+	var distance := camera.global_position.distance_to(_focus_event.global_position)
+	if distance < DISTANCE_THRESHOLD:
+		_on_focused()
+	else:
+		_tw = get_tree().create_tween()
+		_tw.tween_property(camera, "global_position", _focus_event.global_position, focus_duration)
+		_tw.tween_callback(_on_focused)
 
 
 func _try_to_stop_focus() -> void:
@@ -221,8 +257,14 @@ func _on_focused() -> void:
 	_stop_focus()
 	_is_focused = true
 
+	var stream: AudioStream = focus_streams.pick_random()
+	_audio.stream = stream
+	_audio.play()
+
+	_progress.value = 0
 	_focusing_container.visible = false
 	_analyzing_container.visible = true
+	_focus_rect.visible = true
 
 
 func _stop_focus() -> void:
@@ -244,6 +286,9 @@ func _try_to_skip() -> void:
 	_tw.tween_property(_progress, "value", 100, analyze_duration)
 	_tw.tween_callback(_on_skipped)
 
+	_audio.stream = progress_stream
+	_audio.play()
+
 
 func _try_to_stop_skip() -> void:
 	if not _focus_event:
@@ -254,13 +299,20 @@ func _try_to_stop_skip() -> void:
 
 func _on_skipped() -> void:
 	_stop_skip()
+	_focus_rect.visible = false
 	_is_focused = false
 	_looking_disabled = false
+	_analyzing_container.visible = false
 
 	var report_data := ReportData.new()
-	report_data.texture = _focus_event.event.texture
+	var texture: Texture = _focus_event.event.textures.get(0)
+	report_data.texture = texture
 	report_data.event_data = _focus_event.event
 	report_data.is_signal_sent = false
+
+	var stream: AudioStream = focus_streams.pick_random()
+	_audio.stream = stream
+	_audio.play()
 
 	EventBus.emit_report_skipped(report_data)
 
@@ -291,16 +343,26 @@ func _try_to_send_signal() -> void:
 	_tw.tween_property(_progress, "value", 100, analyze_duration)
 	_tw.tween_callback(_on_send_signal)
 
+	_audio.stream = progress_stream
+	_audio.play()
+
 
 func _on_send_signal() -> void:
 	_stop_send_signal()
+	_focus_rect.visible = false
 	_is_focused = false
 	_looking_disabled = false
+	_analyzing_container.visible = false
 
 	var report_data := ReportData.new()
-	report_data.texture = _focus_event.event.texture
+	var texture: Texture = _focus_event.event.textures.get(0)
+	report_data.texture = texture
 	report_data.event_data = _focus_event.event
 	report_data.is_signal_sent = true
+
+	var stream: AudioStream = focus_streams.pick_random()
+	_audio.stream = stream
+	_audio.play()
 
 	EventBus.emit_report_added(report_data)
 
@@ -362,3 +424,7 @@ func _on_event_exited(n: Event) -> void:
 
 func _on_timeout() -> void:
 	_label.visible = false
+
+
+func _on_new_event(event_data: EventData) -> void:
+	register_new_event(event_data)

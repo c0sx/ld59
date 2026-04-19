@@ -1,26 +1,51 @@
 [gd_scene format=3 uid="uid://oy74b865qkdk"]
 
-[ext_resource type="Texture2D" uid="uid://ccp750ombcms1" path="res://scenes/props/monitor/signal.png" id="1_gut86"]
+[ext_resource type="AudioStream" uid="uid://cqvt0evj33su4" path="res://scenes/props/monitor/sounds/ok.wav" id="2_a62o4"]
 [ext_resource type="Script" uid="uid://djawe5qwb54rs" path="res://scenes/props/monitor/monitor.gd" id="2_gut86"]
 [ext_resource type="Texture2D" uid="uid://b6mk0pma61we6" path="res://scenes/props/monitor/monitor.png" id="2_xik1u"]
-[ext_resource type="Texture2D" uid="uid://bba7ook8tsjd6" path="res://scenes/props/monitor/monitor-error.png" id="4_d1mbv"]
-[ext_resource type="Texture2D" uid="uid://vktnjmc313rc" path="res://scenes/props/monitor/monitor-ok.png" id="4_hg3ae"]
-[ext_resource type="Texture2D" uid="uid://dlb3jl637b3fg" path="res://scenes/props/monitor/monitor-keep-silent.png" id="5_hg3ae"]
-[ext_resource type="Texture2D" uid="uid://bdh0lwtchtdyw" path="res://scenes/props/monitor/monitor-found.png" id="6_7fkrm"]
+[ext_resource type="AudioStream" uid="uid://1v3x3yubuupg" path="res://scenes/props/monitor/sounds/error.wav" id="3_oplmv"]
+[ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="8_7fkrm"]
 
 [node name="Monitor" type="Node2D" unique_id=592590865]
 script = ExtResource("2_gut86")
-_default_texture = ExtResource("2_xik1u")
-_signal_texture = ExtResource("1_gut86")
-_ok_texture = ExtResource("4_hg3ae")
-_first_error_texture = ExtResource("4_d1mbv")
-_second_error_texture = ExtResource("5_hg3ae")
-_third_error_texture = ExtResource("6_7fkrm")
+ok_stream = ExtResource("2_a62o4")
+err_stream = ExtResource("3_oplmv")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=634973249]
 unique_name_in_owner = true
+texture = ExtResource("2_xik1u")
 
 [node name="Timer" type="Timer" parent="." unique_id=909252748]
 unique_name_in_owner = true
 wait_time = 1.5
 one_shot = true
+
+[node name="Container" type="MarginContainer" parent="." unique_id=794294196]
+offset_left = -44.0
+offset_top = -13.0
+offset_right = 44.0
+offset_bottom = 14.0
+theme = ExtResource("8_7fkrm")
+
+[node name="OKLabel" type="Label" parent="Container" unique_id=863224254]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme = ExtResource("8_7fkrm")
+theme_type_variation = &"Label_monitor_ok"
+text = "OK"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="ErrorLabel" type="Label" parent="Container" unique_id=975382998]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme = ExtResource("8_7fkrm")
+theme_type_variation = &"Label_monitor_error"
+text = "ERROR"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1793476706]
+unique_name_in_owner = true

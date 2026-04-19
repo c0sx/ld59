@@ -19,11 +19,6 @@ func _ready() -> void:
 func _set_outline(value: bool) -> void:
 	_sprite.material.set_shader_parameter("enabled", value)
 
-	if value:
-		Input.set_default_cursor_shape(Input.CursorShape.CURSOR_POINTING_HAND)
-	else:
-		Input.set_default_cursor_shape(Input.CursorShape.CURSOR_ARROW)
-
 
 func _on_mouse_entered() -> void:
 	_set_outline(true)

@@ -1,6 +1,7 @@
 class_name Lab
 extends Node2D
 
+@export var config: DayConfig
 @export var camera: Camera2D
 
 @onready var _player: Player = %Player
@@ -18,8 +19,8 @@ extends Node2D
 @onready var _monitor: Monitor = %Monitor
 @onready var _report: Report = %Report
 @onready var _progress: Label = %Progress
+@onready var _counter: Label = %StarsCounter
 
-signal new_event(event_data: EventData)
 signal looked_into_telescope
 
 var _open_telescope_intent: bool
@@ -29,6 +30,7 @@ var _events: Array[EventData]
 
 
 func _ready() -> void:
+	assert(config != null, "config is not set")
 	assert(camera != null, "camera is not set")
 	assert(_player != null, "player is not set")
 	assert(_nav_region != null, "nav regions is not set")
@@ -44,6 +46,7 @@ func _ready() -> void:
 	assert(_event_timer != null, "event timer is not set")
 	assert(_monitor != null, "monitor is not set")
 	assert(_progress != null, "progress is not set")
+	assert(_counter != null, "counters is not set")
 
 	EventBus.report_sent.connect(_on_report_sent)
 	EventBus.report_skipped.connect(_on_report_skipped)
@@ -57,6 +60,11 @@ func _ready() -> void:
 
 	_cursor.visible = false
 	_report.visible = false
+
+	var events := config.events.duplicate()
+	events.shuffle()
+	_events = events
+	EventBus.emit_events_initialized(_events)
 
 	_event_timer.start()
 
@@ -79,20 +87,18 @@ func _unhandled_input(event: InputEvent) -> void:
 			_player.move_to(pos)
 
 
-func enter(config: DayConfig) -> void:
-	var events := config.events.duplicate()
-	events.shuffle()
-	_events = events
-
+func enter() -> void:
 	var offset = get_viewport_rect().size / 2
 	var pos: Vector2 = global_position + Vector2(offset.x, offset.y)
 	camera.global_position = pos
 
 	_progress.visible = true
+	_counter.visible = true
 
 
 func _exit() -> void:
 	_progress.visible = false
+	_counter.visible = false
 
 
 func _is_point_on_navmesh(point: Vector2) -> bool:
@@ -183,11 +189,10 @@ func _on_timeout() -> void:
 func _on_event_timer_timeout() -> void:
 	var event_data: EventData = _events.pop_front()
 	if not event_data:
-		_show_notification("Day is over")
+		EventBus.emit_research_failed()
 		return
 
-	_monitor.show_signal()
-	new_event.emit(event_data)
+	EventBus.emit_new_event(event_data)
 
 
 func _on_report_sent(_data: ReportData) -> void:

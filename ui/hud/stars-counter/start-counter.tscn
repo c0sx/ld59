@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cnm1ihvjnnd6e"]
+
+[ext_resource type="Script" uid="uid://c84eptljt4u6m" path="res://ui/hud/stars-counter/stars-counter.gd" id="1_idrfn"]
+[ext_resource type="Theme" uid="uid://ntf0ro2bclfg" path="res://ui/theme.tres" id="1_m7tbq"]
+
+[node name="StarsCounter" type="Label" unique_id=1409806380]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_m7tbq")
+theme_type_variation = &"Label_m"
+script = ExtResource("1_idrfn")

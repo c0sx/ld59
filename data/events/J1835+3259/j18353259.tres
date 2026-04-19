@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EventData" format=3 uid="uid://dkugk5xg4wg5v"]
+
+[ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_3fdm6"]
+[ext_resource type="Texture2D" uid="uid://dgjvewjbumjie" path="res://data/events/J1835+3259/texture.png" id="2_3vn1x"]
+
+[resource]
+script = ExtResource("1_3fdm6")
+textures = Array[Texture]([ExtResource("2_3vn1x")])
+name = "J1835+3259"
+description = "Ultracool dwarf"
+metadata/_custom_type_script = "uid://b8lnirribpset"

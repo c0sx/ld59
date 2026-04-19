@@ -1,26 +1,30 @@
 class_name Monitor
 extends Node2D
 
-@export var _default_texture: Texture
-@export var _signal_texture: Texture
-@export var _ok_texture: Texture
-@export var _first_error_texture: Texture
-@export var _second_error_texture: Texture
-@export var _third_error_texture: Texture
+@export var ok_stream: AudioStream
+@export var err_stream: AudioStream
+@export var ok_message: String = 'ok'
+@export var first_error_message: String = 'error'
+@export var second_error_message: String = 'keep silent'
+@export var third_error_message: String = 'found you'
+@export var new_event_message: String = 'new signal'
 
 @onready var _sprite: Sprite2D = %Sprite2D
 @onready var _timer: Timer = %Timer
+@onready var _ok_label: Label = %OKLabel
+@onready var _error_label: Label = %ErrorLabel
+@onready var _audio: AudioStreamPlayer2D = %AudioStreamPlayer2D
 
 
 func _ready() -> void:
-  assert(_default_texture != null, "default texture is not set")
-  assert(_signal_texture != null, "signal texture is not set")
-  assert(_ok_texture != null, "ok texture is not set")
-  assert(_first_error_texture != null, "first error texture is not set")
-  assert(_second_error_texture != null, "second error texture is not set")
-  assert(_third_error_texture != null, "third error texture is not set")
+  assert(ok_stream != null, "ok stream is not set")
+  assert(err_stream != null, "err stream is not set")
   assert(_sprite != null, "sprite is not set")
+  assert(_ok_label != null, "ok label is not set")
+  assert(_error_label != null, "error label is not set")
+  assert(_audio != null, "audio is not set")
 
+  EventBus.new_event.connect(_on_new_event)
   EventBus.ok_report_sent.connect(_on_ok_report_sent)
   EventBus.error_report_sent.connect(_on_error_report_sent)
   EventBus.report_added.connect(_on_report_added)
@@ -28,45 +32,67 @@ func _ready() -> void:
 
   _timer.timeout.connect(_on_timeout)
 
-  hide_signal()
+  _error_label.visible = false
+  _ok_label.visible = false
 
 
-func show_signal() -> void:
-  _sprite.texture = _signal_texture
+func _show_ok_message(msg: String, start_timer: bool = true) -> void:
+  _timer.stop()
+  _error_label.visible = false
+  _ok_label.visible = true
+  _ok_label.text = msg
+
+  _audio.stop()
+  _audio.stream = ok_stream
+  _audio.play()
+
+  if start_timer:
+    _timer.start()
 
 
-func hide_signal() -> void:
-  _sprite.texture = _default_texture
+func _show_error_message(msg: String) -> void:
+  _timer.stop()
+  _error_label.visible = true
+  _ok_label.visible = false
+  _ok_label.text = msg
+
+  _audio.stop()
+  _audio.stream = err_stream
+  _audio.play()
+
+  _timer.start()
 
 
 func _on_ok_report_sent(_data: ReportData) -> void:
-  _sprite.texture = _ok_texture
-  _timer.start()
+  _show_ok_message(ok_message)
 
 
 func _on_timeout() -> void:
-  if _sprite.texture == _third_error_texture:
+  _error_label.visible = false
+  _ok_label.visible = false
+
+  if _error_label.text == third_error_message:
     EventBus.emit_game_over()
-  else:
-    _sprite.texture = _default_texture
 
 
 func _on_error_report_sent(_data: ReportData, errors_counter: int) -> void:
-  var texture := _default_texture
   if errors_counter == 1:
-    texture = _first_error_texture
+    _show_error_message(first_error_message)
   elif errors_counter == 2:
-    texture = _second_error_texture
+    _show_error_message(second_error_message)
   elif errors_counter == 3:
-    texture = _third_error_texture
-
-  _sprite.texture = texture
-  _timer.start()
+    _show_error_message(third_error_message)
 
 
 func _on_report_added(_data: ReportData) -> void:
-  hide_signal()
+  _error_label.visible = false
+  _ok_label.visible = false
 
 
 func _on_report_skipped(_data: ReportData) -> void:
-  hide_signal()
+  _error_label.visible = false
+  _ok_label.visible = false
+
+
+func _on_new_event(_event: EventData) -> void:
+  _show_ok_message(new_event_message, false)

@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://dcrx2hcod6hap" path="res://scenes/report/report.tscn" id="15_umjok"]
 [ext_resource type="PackedScene" uid="uid://chvdhiuohvcy7" path="res://scenes/lab/ui/rest-layout/rest-layout.tscn" id="16_8oevq"]
 [ext_resource type="PackedScene" uid="uid://bm4i78xcw7in6" path="res://ui/hud/progress/progress.tscn" id="16_tgbm7"]
+[ext_resource type="PackedScene" uid="uid://cnm1ihvjnnd6e" path="res://ui/hud/stars-counter/start-counter.tscn" id="17_rb8ap"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ngnlj"]
 texture = ExtResource("1_gq2x7")
@@ -64,7 +65,7 @@ unique_name_in_owner = true
 [node name="Props" type="Node2D" parent="." unique_id=1284254067]
 
 [node name="Desk" type="StaticBody2D" parent="Props" unique_id=1899593697]
-position = Vector2(400, 160)
+position = Vector2(435, 160)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Props/Desk" unique_id=2023555525]
 shape = SubResource("RectangleShape2D_n3cpm")
@@ -75,11 +76,11 @@ texture = ExtResource("3_o632f")
 [node name="PC" parent="Props" unique_id=586183535 instance=ExtResource("7_w6r65")]
 unique_name_in_owner = true
 process_mode = 3
-position = Vector2(392, 152)
+position = Vector2(427, 152)
 
 [node name="Chair" type="StaticBody2D" parent="Props" unique_id=1422844100]
 unique_name_in_owner = true
-position = Vector2(390, 180)
+position = Vector2(425, 180)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Props/Chair" unique_id=2055953071]
@@ -95,11 +96,11 @@ position = Vector2(175, 125)
 
 [node name="TelescopeTargetPoint" type="Node2D" parent="Props" unique_id=1338990419]
 unique_name_in_owner = true
-position = Vector2(218, 180)
+position = Vector2(232, 200)
 
 [node name="Monitor" parent="Props" unique_id=972134180 instance=ExtResource("10_bfyp6")]
 unique_name_in_owner = true
-position = Vector2(304, 120)
+position = Vector2(304, 112)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=852759823]
 unique_name_in_owner = true
@@ -113,11 +114,11 @@ position = Vector2(250, 200)
 
 [node name="Bed" parent="Props2" unique_id=839591278 instance=ExtResource("11_0mjck")]
 unique_name_in_owner = true
-position = Vector2(200, 256)
+position = Vector2(192, 264)
 
 [node name="BedTargetPoint" type="Node2D" parent="Props2" unique_id=1033860981]
 unique_name_in_owner = true
-position = Vector2(208, 240)
+position = Vector2(200, 248)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2018082166]
 
@@ -142,15 +143,21 @@ theme = ExtResource("12_n4wn5")
 theme_type_variation = &"Label_m"
 horizontal_alignment = 1
 
-[node name="Progress" parent="CanvasLayer" unique_id=679308264 instance=ExtResource("16_tgbm7")]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer" unique_id=199597337]
 anchors_preset = 1
 anchor_left = 1.0
-anchor_bottom = 0.0
-offset_left = -1.0
-offset_bottom = 19.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 46.0
 grow_horizontal = 0
-grow_vertical = 1
+
+[node name="StarsCounter" parent="CanvasLayer/VBoxContainer" unique_id=1409806380 instance=ExtResource("17_rb8ap")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Progress" parent="CanvasLayer/VBoxContainer" unique_id=679308264 instance=ExtResource("16_tgbm7")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="Timer" type="Timer" parent="." unique_id=605579673]
 unique_name_in_owner = true

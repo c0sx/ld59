@@ -7,8 +7,12 @@
 shader = ExtResource("1_5te00")
 shader_parameter/amount = 1.0
 
-[node name="Event" type="Sprite2D" unique_id=1605814883]
+[sub_resource type="SpriteFrames" id="SpriteFrames_5te00"]
+
+[node name="Event" type="AnimatedSprite2D" unique_id=1823181103]
 material = SubResource("ShaderMaterial_5te00")
+sprite_frames = SubResource("SpriteFrames_5te00")
+speed_scale = 0.33
 script = ExtResource("1_kxbol")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=701614679]

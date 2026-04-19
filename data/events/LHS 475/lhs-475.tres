@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="EventData" format=3 uid="uid://mwwl6bgmk18m"]
 
 [ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_kwuck"]
-[ext_resource type="Texture2D" uid="uid://d1pvw7ma2mh68" path="res://data/events/LHS 475/nova.png" id="2_62esx"]
+[ext_resource type="Texture2D" uid="uid://c8lpwx2r71yqm" path="res://data/events/LHS 475/texture.png" id="2_62esx"]
 
 [resource]
 script = ExtResource("1_kwuck")
-texture = ExtResource("2_62esx")
+textures = Array[Texture]([ExtResource("2_62esx")])
 name = "LHS 475"
 description = "red dwarf, transits"
 metadata/_custom_type_script = "uid://b8lnirribpset"

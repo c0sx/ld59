@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="EventData" format=3 uid="uid://cylntaenjoube"]
 
 [ext_resource type="Script" uid="uid://b8lnirribpset" path="res://data/event-data.gd" id="1_sl4c0"]
-[ext_resource type="Texture2D" uid="uid://c3qiwxlq6156v" path="res://data/events/HIP 77257/nova.png" id="2_egseo"]
+[ext_resource type="Texture2D" uid="uid://nkjnw5evbi3h" path="res://data/events/HIP 77257/texture.png" id="2_egseo"]
 
 [resource]
 script = ExtResource("1_sl4c0")
-texture = ExtResource("2_egseo")
+textures = Array[Texture]([ExtResource("2_egseo")])
 name = "HIP 77257"
 description = "G-type, solar analog"
 metadata/_custom_type_script = "uid://b8lnirribpset"

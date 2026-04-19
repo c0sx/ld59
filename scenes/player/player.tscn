@@ -2,15 +2,56 @@
 
 [ext_resource type="Texture2D" uid="uid://c58y7mf4iqauw" path="res://scenes/player/player.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://bljqibrw1ebrl" path="res://scenes/player/player.gd" id="1_dovo2"]
+[ext_resource type="AudioStream" uid="uid://dpsqdni43yuly" path="res://scenes/player/sounds/steps.wav" id="2_5gtgg"]
+[ext_resource type="Texture2D" uid="uid://bnhtysj6qb4ep" path="res://scenes/player/animations/idle_2_1.png" id="4_5gtgg"]
+[ext_resource type="Texture2D" uid="uid://bo1ldimdj54vd" path="res://scenes/player/animations/idle_2_2.png" id="5_h17s1"]
+[ext_resource type="Texture2D" uid="uid://cjmgskr5vd1tk" path="res://scenes/player/animations/walk_2.png" id="6_5gtgg"]
+[ext_resource type="Texture2D" uid="uid://dltehxah1p1r0" path="res://scenes/player/animations/walk_3.png" id="7_h17s1"]
+[ext_resource type="Texture2D" uid="uid://d2w8ju6anloou" path="res://scenes/player/animations/walk_4.png" id="8_je7p5"]
+[ext_resource type="Texture2D" uid="uid://bey8r1esn7bt5" path="res://scenes/player/animations/walk_5.png" id="9_fm80t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8afob"]
 size = Vector2(9, 10)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_75vfm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_5gtgg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_h17s1")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_5gtgg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_h17s1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_je7p5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_fm80t")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
 [node name="Player" type="CharacterBody2D" unique_id=1414958135]
 motion_mode = 1
 script = ExtResource("1_dovo2")
+steps = Array[AudioStream]([ExtResource("2_5gtgg")])
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=485497185]
+unique_name_in_owner = true
+visible = false
 y_sort_enabled = true
 texture = ExtResource("1_8afob")
 
@@ -21,3 +62,12 @@ shape = SubResource("RectangleShape2D_8afob")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1149565716]
 unique_name_in_owner = true
 avoidance_enabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2090145981]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_75vfm")
+animation = &"walk"
+frame_progress = 0.73448557
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="." unique_id=664662826]
+unique_name_in_owner = true

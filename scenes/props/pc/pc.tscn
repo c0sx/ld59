@@ -10,7 +10,7 @@ size = Vector2(32, 32)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kx2pw"]
 shader = ExtResource("2_vs0db")
 shader_parameter/enabled = false
-shader_parameter/outline_color = Color(0, 1, 0, 1)
+shader_parameter/outline_color = Color(0.84705883, 0.84705883, 0.9647059, 1)
 shader_parameter/outline_width = 1.0
 
 [node name="PC" type="Area2D" unique_id=586183535]

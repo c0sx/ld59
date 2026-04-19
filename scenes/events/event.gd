@@ -1,5 +1,5 @@
 class_name Event
-extends Sprite2D
+extends AnimatedSprite2D
 
 @export var event: EventData
 
@@ -11,13 +11,18 @@ signal exited(n: Event)
 
 func _ready() -> void:
 	assert(_notifier != null, "notifier is not set")
+	sprite_frames = sprite_frames.duplicate()
 
 	_notifier.screen_entered.connect(_on_screen_entered)
 	_notifier.screen_exited.connect(_on_screen_exited)
 
-	texture = event.texture
+	for texture in event.textures:
+		sprite_frames.add_frame("default", texture)
+
 	material = material.duplicate()
 	material.set_shader_parameter("amount", 0.0)
+
+	play("default")
 
 
 func mark_analyzed() -> void:
